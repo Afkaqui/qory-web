@@ -42,8 +42,8 @@ export function BandHead({
   oscuro?: boolean;
 }) {
   return (
-    <div className="mb-8 max-w-[70ch] lg:mb-11">
-      <span className={`eyebrow ${oscuro ? "eyebrow-luz" : ""}`}>{eyebrow}</span>
+    <div className="revela mb-8 max-w-[70ch] lg:mb-11">
+      <span className={`eyebrow filete ${oscuro ? "eyebrow-luz" : ""}`}>{eyebrow}</span>
       <h2
         className={`mt-3 text-[clamp(25px,3.6vw,38px)] ${oscuro ? "text-[#f1f5ee]" : ""}`}
       >
@@ -76,11 +76,11 @@ export function PageHead({
   return (
     <section className="bg-verde-hondo py-11 sm:py-14 lg:py-18">
       <div className="wrap">
-        <span className="eyebrow eyebrow-luz">{eyebrow}</span>
-        <h1 className="mt-3.5 text-[clamp(30px,5vw,52px)] text-[#f1f5ee]">
+        <span className="eyebrow eyebrow-luz filete entra">{eyebrow}</span>
+        <h1 className="entra entra-1 mt-3.5 text-[clamp(30px,5vw,52px)] text-[#f1f5ee]">
           {titulo}
         </h1>
-        <p className="mt-4 max-w-[62ch] text-[clamp(15px,1.7vw,18px)] text-[#b8c2b4]">
+        <p className="entra entra-2 mt-4 max-w-[62ch] text-[clamp(15px,1.7vw,18px)] text-[#b8c2b4]">
           {texto}
         </p>
       </div>
@@ -105,7 +105,7 @@ export function Grid({
     4: "sm:grid-cols-2 lg:grid-cols-4",
   } as const;
   return (
-    <div className={`grid grid-cols-1 gap-[18px] ${map[cols]} ${className}`}>
+    <div className={`revela grid grid-cols-1 gap-[18px] ${map[cols]} ${className}`}>
       {children}
     </div>
   );
@@ -115,14 +115,12 @@ export function Grid({
 
 export function Pasos({ oscuro = false }: { oscuro?: boolean }) {
   return (
-    <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2 lg:grid-cols-5">
+    <div className="revela grid grid-cols-1 gap-3.5 sm:grid-cols-2 lg:grid-cols-5">
       {PASOS.map((p, i) => (
         <div
           key={p.titulo}
-          className={`rounded-b-[3px] border border-t-2 p-5 ${
-            oscuro
-              ? "border-linea-honda border-t-hoja-luz bg-white/5"
-              : "border-linea border-t-hoja bg-white"
+          className={`paso-vivo rounded-b-[3px] border p-5 ${
+            oscuro ? "border-linea-honda bg-white/5" : "border-linea bg-white"
           }`}
         >
           <div
@@ -161,13 +159,13 @@ export function Galeria({
 }) {
   const map = { 1: "", 2: "sm:grid-cols-2", 3: "sm:grid-cols-2 lg:grid-cols-3" };
   return (
-    <div className={`grid grid-cols-1 gap-3.5 ${map[cols]}`}>
+    <div className={`revela grid grid-cols-1 gap-3.5 ${map[cols]}`}>
       {claves.map((k, i) => {
         const f = FOTOS[k];
         return (
           <figure
             key={k}
-            className="overflow-hidden rounded-[3px] border border-linea bg-white"
+            className="foto-viva overflow-hidden rounded-[3px] border border-linea bg-white transition-colors duration-300 hover:border-lima"
           >
             <Image
               src={`/img/planta/${f.archivo}.jpg`}
@@ -201,7 +199,7 @@ export function Cta({
 }) {
   return (
     <section className="bg-verde-hondo py-12 sm:py-16">
-      <div className="wrap grid grid-cols-1 items-center gap-8 lg:grid-cols-[1.4fr_1fr]">
+      <div className="wrap revela grid grid-cols-1 items-center gap-8 lg:grid-cols-[1.4fr_1fr]">
         <div>
           <h2 className="text-[clamp(25px,3.6vw,38px)] text-[#f1f5ee]">
             {titulo}
@@ -209,7 +207,7 @@ export function Cta({
           <p className="mt-3.5 max-w-[52ch] text-[#b8c2b4]">{texto}</p>
         </div>
         <div className="flex flex-wrap gap-3 lg:justify-end">
-          <Link className="btn btn-hoja" href="/contacto">
+          <Link className="btn btn-hoja btn-brillo" href="/contacto">
             {boton}
           </Link>
           <a className="btn btn-linea" href={`mailto:${EMPRESA.correo}`}>

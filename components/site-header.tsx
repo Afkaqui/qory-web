@@ -3,28 +3,37 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { MENU } from "@/lib/empresa";
 
 export function SiteHeader() {
   const pathname = usePathname();
   const [abierto, setAbierto] = useState(false);
+  const [rutaPrevia, setRutaPrevia] = useState(pathname);
 
-  // Cerrar el menú al cambiar de página.
-  useEffect(() => setAbierto(false), [pathname]);
+  // Cerrar el menú al cambiar de página, ajustando el estado durante el render
+  // (patrón recomendado por React, sin efecto ni renders en cascada).
+  if (rutaPrevia !== pathname) {
+    setRutaPrevia(pathname);
+    setAbierto(false);
+  }
 
   return (
     <header className="sticky top-[env(safe-area-inset-top,0px)] z-50 border-b border-linea bg-hueso/93 backdrop-blur-[10px] backdrop-saturate-150">
       <div className="wrap">
         <div className="flex min-h-[70px] items-center gap-6">
-          <Link href="/" aria-label="Qory Lab, inicio" className="shrink-0">
+          <Link
+            href="/"
+            aria-label="Qory Lab, inicio"
+            className="shrink-0 transition-transform duration-300 hover:scale-[1.03]"
+          >
             <Image
               src="/img/logo.png"
               alt="Qory Laboratorios"
-              width={603}
-              height={150}
+              width={539}
+              height={132}
               priority
-              className="h-9 w-auto sm:h-10"
+              className="h-11 w-auto sm:h-12"
             />
           </Link>
 
@@ -33,7 +42,7 @@ export function SiteHeader() {
             aria-expanded={abierto}
             aria-controls="nav-menu"
             onClick={() => setAbierto((v) => !v)}
-            className="ml-auto cursor-pointer rounded-[2px] border border-linea px-3 py-2.5 text-[13px] font-semibold text-verde lg:hidden"
+            className="ml-auto cursor-pointer rounded-[2px] border border-linea px-3 py-2.5 text-[13px] font-semibold text-verde transition-colors hover:border-lima hover:bg-lima/15 lg:hidden"
           >
             {abierto ? "Cerrar" : "Menú"}
           </button>
@@ -52,10 +61,8 @@ export function SiteHeader() {
                     <Link
                       href={m.href}
                       aria-current={activo ? "page" : undefined}
-                      className={`block border-b border-linea px-1 py-3.5 text-sm font-medium lg:rounded-[2px] lg:border-0 lg:px-2.5 lg:py-2 lg:hover:bg-nube ${
-                        activo
-                          ? "text-hoja-txt lg:shadow-[inset_0_-2px_0_var(--color-hoja)]"
-                          : "text-verde"
+                      className={`enlace-nav block border-b border-linea px-1 py-3.5 text-sm font-medium lg:border-0 lg:px-2.5 lg:py-2 ${
+                        activo ? "esta-aqui text-hoja-txt" : "text-verde"
                       }`}
                     >
                       {m.texto}
@@ -66,7 +73,7 @@ export function SiteHeader() {
               <li className="mt-3 lg:mt-0 lg:ml-2">
                 <Link
                   href="/contacto"
-                  className="block rounded-[2px] bg-verde px-4.5 py-2.5 text-center text-sm font-semibold text-hueso hover:bg-verde-alto"
+                  className="btn-brillo block rounded-[2px] bg-verde px-4.5 py-2.5 text-center text-sm font-semibold text-hueso"
                 >
                   Cotiza tu proyecto
                 </Link>

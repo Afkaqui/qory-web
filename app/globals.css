@@ -12,9 +12,11 @@
   --color-verde-hondo: #1e3327; /* fondos oscuros, pie de página */
   --color-verde-alto: #35573b; /* hover sobre verde */
   --color-hoja: #6fae22; /* verde hoja del símbolo — acento */
+  --color-lima: #8cc63f; /* verde lima del símbolo */
+  --color-amarillo: #ebda01; /* amarillo del símbolo */
+  --color-amarillo-luz: #f6e94b;
   --color-hoja-txt: #4a7411; /* acento legible sobre fondo claro */
   --color-hoja-luz: #93c93f; /* acento sobre fondo oscuro */
-  --color-amarillo: #ebda01; /* amarillo del símbolo — solo decorativo */
 
   /* Neutros con sesgo verde */
   --color-hueso: #f4f5ef;
@@ -324,5 +326,238 @@
   }
   .doc a {
     color: var(--color-hoja-txt);
+  }
+}
+
+
+/* =========================================================
+   Movimiento y acentos vivos
+   El gradiente reproduce el barrido del símbolo: verde → lima → amarillo.
+   ========================================================= */
+
+@theme {
+  --gradiente-marca: linear-gradient(
+    100deg,
+    #4fa62f 0%,
+    #8cc63f 42%,
+    #ebda01 100%
+  );
+}
+
+@layer components {
+  /* Texto con el barrido del símbolo */
+  .texto-marca {
+    background: var(--gradiente-marca);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Filete de acento bajo las etiquetas de sección */
+  .filete::after {
+    content: "";
+    display: block;
+    width: 44px;
+    height: 3px;
+    margin-top: 12px;
+    border-radius: 2px;
+    background: var(--gradiente-marca);
+    transform-origin: left;
+    animation: filete-entra 0.7s cubic-bezier(0.2, 0.7, 0.3, 1) both;
+  }
+  @keyframes filete-entra {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+
+  /* Botón con destello al pasar el cursor */
+  .btn-brillo {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    transition:
+      background-color 0.2s ease,
+      transform 0.2s ease;
+  }
+  .btn-brillo::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--gradiente-marca);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+  .btn-brillo:hover {
+    color: #14240a;
+    transform: translateY(-1px);
+  }
+  .btn-brillo:hover::before {
+    opacity: 1;
+  }
+
+  /* Enlaces de la barra: subrayado que crece */
+  .enlace-nav {
+    position: relative;
+    transition: color 0.2s ease;
+  }
+  .enlace-nav:hover {
+    color: var(--color-hoja-txt);
+  }
+  @media (min-width: 1024px) {
+    .enlace-nav::after {
+      content: "";
+      position: absolute;
+      left: 10px;
+      right: 10px;
+      bottom: 2px;
+      height: 2px;
+      border-radius: 2px;
+      background: var(--gradiente-marca);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.25s cubic-bezier(0.2, 0.7, 0.3, 1);
+    }
+    .enlace-nav:hover::after,
+    .enlace-nav.esta-aqui::after {
+      transform: scaleX(1);
+    }
+  }
+
+  /* Tarjetas: se levantan y encienden el borde */
+  .card {
+    transition:
+      transform 0.25s cubic-bezier(0.2, 0.7, 0.3, 1),
+      border-color 0.25s ease,
+      box-shadow 0.25s ease;
+  }
+  .card-viva:hover {
+    transform: translateY(-4px);
+    border-color: var(--color-lima);
+    box-shadow: 0 10px 28px -18px rgb(30 51 39 / 0.45);
+  }
+  .card-pie a {
+    display: inline-block;
+    transition: transform 0.2s ease;
+  }
+  .card-pie a:hover {
+    transform: translateX(3px);
+  }
+
+  /* Fotos: acercamiento suave */
+  .foto-viva img {
+    transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.3, 1);
+  }
+  .foto-viva:hover img {
+    transform: scale(1.04);
+  }
+
+  /* Pasos del proceso: filete de marca arriba, que se ensancha al pasar */
+  .paso-vivo {
+    position: relative;
+    transition:
+      transform 0.25s cubic-bezier(0.2, 0.7, 0.3, 1),
+      border-color 0.25s ease;
+  }
+  .paso-vivo::before {
+    content: "";
+    position: absolute;
+    inset: -1px -1px auto -1px;
+    height: 3px;
+    background: var(--gradiente-marca);
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+  .paso-vivo:hover {
+    transform: translateY(-3px);
+    border-color: var(--color-lima);
+  }
+
+  /* Cifras de portada */
+  .cifra {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Cinta de categorías */
+  .cinta {
+    display: flex;
+    width: max-content;
+    animation: cinta-corre 42s linear infinite;
+  }
+  .cinta-marco:hover .cinta {
+    animation-play-state: paused;
+  }
+  @keyframes cinta-corre {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+}
+
+/* --------------------------------------------------------- entrada al cargar */
+@media (prefers-reduced-motion: no-preference) {
+  .entra {
+    animation: entra 0.65s cubic-bezier(0.2, 0.7, 0.3, 1) both;
+  }
+  .entra-1 { animation-delay: 0.06s; }
+  .entra-2 { animation-delay: 0.14s; }
+  .entra-3 { animation-delay: 0.22s; }
+  .entra-4 { animation-delay: 0.3s; }
+
+  @keyframes entra {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+/* ------------------------------------------------- aparición con el scroll
+   Se usa una animación guiada por el scroll. Donde el navegador no la
+   soporta, el contenido simplemente se ve: nunca queda oculto esperando. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .revela {
+      animation: revela linear both;
+      animation-timeline: view();
+      animation-range: entry 8% cover 26%;
+    }
+    @keyframes revela {
+      from {
+        opacity: 0;
+        transform: translateY(26px);
+      }
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Sin movimiento, la cinta se convierte en un listado que se acomoda solo
+     y la copia duplicada sobra: se oculta para no repetir el contenido. */
+  .cinta {
+    animation: none;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  .cinta > [aria-hidden="true"] {
+    display: none;
+  }
+  .filete::after {
+    animation: none;
   }
 }
