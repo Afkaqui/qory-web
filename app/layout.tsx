@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import { Archivo, Fraunces, IBM_Plex_Mono } from "next/font/google";
-import { SiteHeader } from "@/components/site-header";
-import { SiteFooter } from "@/components/site-footer";
 import { EMPRESA } from "@/lib/empresa";
 import "./globals.css";
 
@@ -59,9 +57,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         >
           Ir al contenido
         </a>
-        <SiteHeader />
-        <main id="principal">{children}</main>
-        <SiteFooter />
+        {children}
       </body>
     </html>
   );

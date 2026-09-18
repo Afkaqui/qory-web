@@ -47,10 +47,14 @@ export default function Page() {
               <div className="card-pie border-t border-solid border-linea">
                 <p className="text-[15px] text-acero">
                   {EMPRESA.telefonos.map((t) => (
-                    <span key={t}>
-                      <a className="text-hoja-txt" href={`tel:+51${t.replace(/\s/g, "")}`}>
-                        {t}
-                      </a>
+                    <span key={t.numero}>
+                      <a
+                        className="font-medium text-hoja-txt"
+                        href={`tel:+51${t.numero.replace(/\s/g, "")}`}
+                      >
+                        {t.numero}
+                      </a>{" "}
+                      <span className="text-acero-claro">{t.rol}</span>
                       <br />
                     </span>
                   ))}

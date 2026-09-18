@@ -28,7 +28,19 @@ app/
   globals.css                  Sistema de diseño completo
   sitemap.ts · robots.ts · icon.png
 
+app/intranet/                  MAQUETA VISUAL de la intranet (sin backend)
+  page.tsx                     Pantalla de ingreso — campos desactivados a propósito
+  panel/                       Tablero: cifras, tendencia, alertas, lotes en curso
+  produccion/                  Parte de producción
+  calidad/                     Registro de análisis y liberación de lote
+  tareas/                      Tareas abiertas, vencidas y cerradas
+  procesos/                    Mapa de procesos vivo, por pedido y por stock
+  personas/                    Turno, asistencia, capacitación, productividad
+  usuarios/                    Alta y baja de accesos
+  auditoria/                   Bitácora de quién hizo qué
+
 components/
+  intranet/marco.tsx           Marco de la intranet + selector de rol de la demo
   site-header.tsx              Barra de navegación (cliente: menú móvil)
   site-footer.tsx              Pie
   ui.tsx                       Band, BandHead, PageHead, Grid, Pasos, Galeria, Cta, Declara
@@ -37,6 +49,7 @@ components/
   quote-form.tsx               Briefing de cotización (cliente)
 
 lib/empresa.ts                 Datos de la empresa, menú, pasos del proceso y fotos
+lib/intranet-demo.ts           Datos de ejemplo de la maqueta de intranet
 public/img/                    Logotipos y 17 fotos de planta
 ```
 
@@ -119,3 +132,26 @@ El sitio es 100 % estático tras `next build`. Se puede desplegar en Vercel sin
 configuración, o exportar con `output: "export"` en `next.config.ts` si se prefiere
 subirlo al hosting actual de `qorylab.com`. Si se exporta, recordar que
 `next/image` necesita `images: { unoptimized: true }`.
+
+
+## La intranet es una maqueta
+
+`/intranet` es **solo visual**: no hay base de datos, ni sesión, ni servidor de
+autenticación. Todo lo que se ve sale de constantes en `lib/intranet-demo.ts` y
+ningún formulario guarda nada. Se entra desde el botón **Intranet** de la barra
+de servicio del sitio (arriba a la derecha) o, en móvil, al final del menú.
+
+Para recorrerla: en `/intranet` está el botón «Entrar a la demostración». Arriba
+a la derecha hay un selector **Ver como** que cambia entre Operario, Jefe de área
+y Encargado, y con él cambia qué secciones aparecen en el menú lateral. Es la
+forma de mostrar el modelo de permisos sin haber construido permisos.
+
+Los campos de la pantalla de ingreso están **desactivados a propósito**: un
+formulario que parece real pero no valida nada invita a escribir una contraseña
+verdadera en un sitio que no la protege.
+
+Cuando se decida construirla de verdad, lo que hay que agregar es: autenticación
+con sesión y contraseñas cifradas, base de datos relacional, acciones de servidor
+que verifiquen rol en cada llamada, y una bitácora de auditoría que no se pueda
+modificar. La propuesta completa —roles, módulos, indicadores y fases— está en el
+documento de intranet que acompaña a este proyecto.

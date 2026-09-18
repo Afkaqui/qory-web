@@ -75,19 +75,17 @@ export function SiteFooter() {
                 <br />
                 {EMPRESA.distrito}
               </li>
-              <li>
-                {EMPRESA.telefonos.map((t, i) => (
-                  <span key={t}>
-                    {i > 0 && " · "}
-                    <a
-                      className="text-[#c3ccbe] hover:text-white hover:underline"
-                      href={`tel:+51${t.replace(/\s/g, "")}`}
-                    >
-                      {t}
-                    </a>
-                  </span>
-                ))}
-              </li>
+              {EMPRESA.telefonos.map((t) => (
+                <li key={t.numero}>
+                  <a
+                    className="text-[#c3ccbe] hover:text-white hover:underline"
+                    href={`tel:+51${t.numero.replace(/\s/g, "")}`}
+                  >
+                    {t.numero}
+                  </a>{" "}
+                  <span className="text-[#6d7d6b]">{t.rol}</span>
+                </li>
+              ))}
               <li>
                 <a
                   className="text-[#c3ccbe] hover:text-white hover:underline"

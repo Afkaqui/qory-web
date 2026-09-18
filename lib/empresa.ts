@@ -16,7 +16,12 @@ export const EMPRESA = {
   distrito: "San Juan de Lurigancho, Lima, Perú",
   referencia: "Av. Los Claveles, frente a la fábrica Celima",
   correo: "comercial@qorylab.com",
-  telefonos: ["934 607 692", "983 420 486"],
+  // El primero es el contacto comercial: es el que se muestra primero en todas partes.
+  telefonos: [
+    { numero: "945 217 404", rol: "Ventas" },
+    { numero: "934 607 692", rol: "Planta" },
+    { numero: "983 420 486", rol: "Planta" },
+  ],
   horario: ["Lunes a viernes, de 8:00 a 17:30", "Sábados, de 8:00 a 12:30"],
   sitio: "https://qorylab.com",
   redes: {

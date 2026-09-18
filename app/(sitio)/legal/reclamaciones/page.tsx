@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  const tel = EMPRESA.telefonos[0];
+  const tel = EMPRESA.telefonos[0].numero;
   return (
     <>
       <PageHead
