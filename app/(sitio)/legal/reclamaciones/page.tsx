@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Band, PageHead } from "@/components/ui";
+import { Portadilla, Seccion } from "@/components/hoja";
 import { EMPRESA } from "@/lib/empresa";
 
 export const metadata: Metadata = {
@@ -14,13 +14,13 @@ export default function Page() {
   const tel = EMPRESA.telefonos[0].numero;
   return (
     <>
-      <PageHead
-        eyebrow="Legal"
+      <Portadilla
+        codigo="Anexo B · Legal"
         titulo="Libro de Reclamaciones"
-        texto="Conforme al Código de Protección y Defensa del Consumidor, Ley 29571, ponemos a tu disposición nuestro Libro de Reclamaciones virtual."
+        lede="Conforme al Código de Protección y Defensa del Consumidor, Ley 29571, ponemos a tu disposición nuestro Libro de Reclamaciones virtual."
       />
 
-      <Band tono="blanco">
+      <Seccion>
         <div className="doc">
           <div className="aviso">
             <span className="aviso-tag">Pendiente de implementación</span>
@@ -65,7 +65,7 @@ export default function Page() {
             {EMPRESA.direccion}, {EMPRESA.distrito}
           </p>
         </div>
-      </Band>
+      </Seccion>
     </>
   );
 }

@@ -1,31 +1,36 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
 
 /* =========================================================
    Qory Lab — sistema de diseño
-   Los colores salen del logotipo oficial: el verde del
-   logotipo (#47704C), el verde hoja y el amarillo del símbolo.
+   Colores medidos del archivo oficial del logotipo: el olivo del
+   wordmark (#666745), el verde del símbolo (#3CAB35) y su amarillo
+   (#E0DE00). No deducidos de una imagen comprimida.
    ========================================================= */
 
 @theme {
   /* Marca */
-  --color-verde: #47704c; /* verde del logotipo — color primario */
-  --color-verde-hondo: #1e3327; /* fondos oscuros, pie de página */
-  --color-verde-alto: #35573b; /* hover sobre verde */
-  --color-hoja: #6fae22; /* verde hoja del símbolo — acento */
-  --color-lima: #8cc63f; /* verde lima del símbolo */
-  --color-amarillo: #ebda01; /* amarillo del símbolo */
-  --color-amarillo-luz: #f6e94b;
-  --color-hoja-txt: #4a7411; /* acento legible sobre fondo claro */
-  --color-hoja-luz: #93c93f; /* acento sobre fondo oscuro */
+  --color-verde: #666745; /* verde del logotipo — color primario */
+  --color-verde-hondo: #2a2b1c; /* fondos oscuros, pie de página */
+  --color-verde-alto: #4e4f33; /* hover sobre verde */
+  --color-hoja: #3cab35; /* verde hoja del símbolo — acento */
+  --color-lima: #6bc45e; /* verde lima del símbolo */
+  --color-amarillo: #e0de00; /* amarillo del símbolo */
+  --color-amarillo-luz: #efee4f;
+  --color-hoja-txt: #2a7a26; /* acento legible sobre fondo claro */
+  --color-hoja-luz: #7fd16f; /* acento sobre fondo oscuro */
 
   /* Neutros con sesgo verde */
-  --color-hueso: #f4f5ef;
-  --color-nube: #e7e9df;
-  --color-tinta: #1e2a20;
-  --color-acero: #55604f;
-  --color-acero-claro: #7c8576;
-  --color-linea: #dcdfd3;
-  --color-linea-honda: #2c4433;
+  --color-hueso: #f5f5ee;
+  --color-nube: #e9e9dc;
+  --color-tinta: #23241a;
+  --color-acero: #5c5d4c;
+  --color-acero-claro: #85866f;
+  --color-linea: #ddddd0;
+  --color-linea-honda: #3c3d28;
 
   /* Tipografía */
   --font-sans: var(--font-archivo), "Helvetica Neue", Arial, sans-serif;
@@ -36,6 +41,7 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    @apply font-sans;
   }
   @media (prefers-reduced-motion: reduce) {
     html {
@@ -50,6 +56,7 @@
     font-size: 16px;
     line-height: 1.62;
     -webkit-font-smoothing: antialiased;
+    @apply bg-background text-foreground;
   }
 
   h1,
@@ -66,6 +73,9 @@
     outline: 2px solid var(--color-hoja);
     outline-offset: 3px;
     border-radius: 2px;
+  }
+  * {
+    @apply border-border outline-ring/50;
   }
 }
 
@@ -329,214 +339,568 @@
   }
 }
 
-
-/* =========================================================
-   Movimiento y acentos vivos
-   El gradiente reproduce el barrido del símbolo: verde → lima → amarillo.
-   ========================================================= */
-
-@theme {
-  --gradiente-marca: linear-gradient(
-    100deg,
-    #4fa62f 0%,
-    #8cc63f 42%,
-    #ebda01 100%
-  );
+@theme inline {
+  /* shadcn esperaba que next/font definiera --font-sans; aquí lo provee
+     Archivo, que es la tipografía de la marca. */
+  --font-heading: var(--font-archivo), "Helvetica Neue", Arial, sans-serif;
+  --font-sans: var(--font-archivo), "Helvetica Neue", Arial, sans-serif;
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
 }
 
+:root {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.87 0 0);
+  --chart-2: oklch(0.556 0 0);
+  --chart-3: oklch(0.439 0 0);
+  --chart-4: oklch(0.371 0 0);
+  --chart-5: oklch(0.269 0 0);
+  --radius: 0.625rem;
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.87 0 0);
+  --chart-2: oklch(0.556 0 0);
+  --chart-3: oklch(0.439 0 0);
+  --chart-4: oklch(0.371 0 0);
+  --chart-5: oklch(0.269 0 0);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+}
+
+/* =========================================================
+   LENGUAJE «FICHA TÉCNICA» — sitio público
+   La referencia no es una web corporativa: es la hoja de
+   especificaciones que este laboratorio produce todos los días.
+   Filetes en vez de tarjetas, datos en monoespaciada, índices
+   numerados y mucho aire. Nada flota dentro de una caja.
+   ========================================================= */
+
 @layer components {
-  /* Texto con el barrido del símbolo */
-  .texto-marca {
-    background: var(--gradiente-marca);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
-
-  /* Filete de acento bajo las etiquetas de sección */
-  .filete::after {
-    content: "";
-    display: block;
-    width: 44px;
-    height: 3px;
-    margin-top: 12px;
-    border-radius: 2px;
-    background: var(--gradiente-marca);
-    transform-origin: left;
-    animation: filete-entra 0.7s cubic-bezier(0.2, 0.7, 0.3, 1) both;
-  }
-  @keyframes filete-entra {
-    from {
-      transform: scaleX(0);
-    }
-    to {
-      transform: scaleX(1);
-    }
-  }
-
-  /* Botón con destello al pasar el cursor */
-  .btn-brillo {
-    position: relative;
-    overflow: hidden;
-    isolation: isolate;
-    transition:
-      background-color 0.2s ease,
-      transform 0.2s ease;
-  }
-  .btn-brillo::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background: var(--gradiente-marca);
-    opacity: 0;
-    transition: opacity 0.25s ease;
-  }
-  .btn-brillo:hover {
-    color: #14240a;
-    transform: translateY(-1px);
-  }
-  .btn-brillo:hover::before {
-    opacity: 1;
-  }
-
-  /* Enlaces de la barra: subrayado que crece */
-  .enlace-nav {
-    position: relative;
-    transition: color 0.2s ease;
-  }
-  .enlace-nav:hover {
-    color: var(--color-hoja-txt);
+  .hoja {
+    max-width: 1240px;
+    margin-inline: auto;
+    padding-inline: 22px;
   }
   @media (min-width: 1024px) {
-    .enlace-nav::after {
-      content: "";
-      position: absolute;
-      left: 10px;
-      right: 10px;
-      bottom: 2px;
-      height: 2px;
-      border-radius: 2px;
-      background: var(--gradiente-marca);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.25s cubic-bezier(0.2, 0.7, 0.3, 1);
-    }
-    .enlace-nav:hover::after,
-    .enlace-nav.esta-aqui::after {
-      transform: scaleX(1);
+    .hoja {
+      padding-inline: 40px;
     }
   }
 
-  /* Tarjetas: se levantan y encienden el borde */
-  .card {
-    transition:
-      transform 0.25s cubic-bezier(0.2, 0.7, 0.3, 1),
-      border-color 0.25s ease,
-      box-shadow 0.25s ease;
+  /* ---------- filetes: el único separador del sistema ---------- */
+  .regla {
+    border-top: 1px solid var(--color-linea);
   }
-  .card-viva:hover {
-    transform: translateY(-4px);
-    border-color: var(--color-lima);
-    box-shadow: 0 10px 28px -18px rgb(30 51 39 / 0.45);
+  .regla-firme {
+    border-top: 1.5px solid var(--color-verde);
   }
-  .card-pie a {
-    display: inline-block;
-    transition: transform 0.2s ease;
-  }
-  .card-pie a:hover {
-    transform: translateX(3px);
+  .regla-fina {
+    border-top: 1px solid color-mix(in srgb, var(--color-linea) 70%, transparent);
   }
 
-  /* Fotos: acercamiento suave */
-  .foto-viva img {
-    transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.3, 1);
+  /* ---------- rótulos ---------- */
+  .rotulo {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-acero-claro);
+    display: block;
   }
-  .foto-viva:hover img {
-    transform: scale(1.04);
+  .rotulo-verde {
+    color: var(--color-hoja-txt);
+  }
+  .rotulo-luz {
+    color: #93a390;
   }
 
-  /* Pasos del proceso: filete de marca arriba, que se ensancha al pasar */
-  .paso-vivo {
-    position: relative;
-    transition:
-      transform 0.25s cubic-bezier(0.2, 0.7, 0.3, 1),
-      border-color 0.25s ease;
+  /* ---------- cabecera de sección numerada ---------- */
+  .clausula {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 16px;
+    padding-top: 14px;
   }
-  .paso-vivo::before {
+  .clausula::after {
     content: "";
-    position: absolute;
-    inset: -1px -1px auto -1px;
-    height: 3px;
-    background: var(--gradiente-marca);
-    transform: scaleX(1);
-    transform-origin: left;
+    height: 1px;
+    background: var(--color-linea);
   }
-  .paso-vivo:hover {
-    transform: translateY(-3px);
-    border-color: var(--color-lima);
+  .clausula > span {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-verde);
+    white-space: nowrap;
   }
 
-  /* Cifras de portada */
-  .cifra {
+  /* ---------- titulares ---------- */
+  .titular {
+    font-size: clamp(38px, 8.2vw, 104px);
+    line-height: 0.92;
+    letter-spacing: -0.045em;
+    font-weight: 700;
+  }
+  .titular-medio {
+    font-size: clamp(27px, 4.6vw, 52px);
+    line-height: 1;
+    letter-spacing: -0.035em;
+    font-weight: 700;
+  }
+  .titular-chico {
+    font-size: clamp(20px, 2.6vw, 28px);
+    line-height: 1.08;
+    letter-spacing: -0.025em;
+    font-weight: 700;
+  }
+
+  /* ---------- tabla de especificaciones ---------- */
+  .spec {
+    display: grid;
+    gap: 0;
+  }
+  .spec > div {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 4px;
+    padding-block: 14px;
+    border-top: 1px solid var(--color-linea);
+  }
+  .spec > div:last-child {
+    border-bottom: 1px solid var(--color-linea);
+  }
+  @media (min-width: 640px) {
+    .spec > div {
+      grid-template-columns: 148px minmax(0, 1fr);
+      gap: 28px;
+      align-items: baseline;
+    }
+  }
+  .spec dt,
+  .spec .k {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-acero-claro);
+    margin: 0;
+  }
+  .spec dd,
+  .spec .v {
+    margin: 0;
+    font-size: 15.5px;
+    color: var(--color-tinta);
+  }
+
+  /* ---------- índice numerado ---------- */
+  .indice {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .indice > li {
+    display: grid;
+    grid-template-columns: 46px minmax(0, 1fr);
+    gap: 0 18px;
+    padding-block: 22px;
+    border-top: 1px solid var(--color-linea);
+  }
+  .indice > li:last-child {
+    border-bottom: 1px solid var(--color-linea);
+  }
+  @media (min-width: 900px) {
+    .indice > li {
+      grid-template-columns: 46px minmax(0, 0.9fr) minmax(0, 1.2fr) auto;
+      gap: 0 32px;
+      align-items: start;
+    }
+  }
+  .indice .n {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--color-hoja-txt);
+    padding-top: 5px;
+  }
+  .indice .t {
+    font-size: clamp(17px, 2vw, 21px);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--color-verde);
+  }
+  .indice .d {
+    margin-top: 6px;
+    font-size: 14.5px;
+    color: var(--color-acero);
+  }
+  @media (min-width: 900px) {
+    .indice .d {
+      margin-top: 0;
+    }
+  }
+  .indice .meta {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-acero-claro);
+    white-space: nowrap;
+    padding-top: 5px;
+  }
+
+  /* ---------- dato suelto en monoespaciada ---------- */
+  .dato {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    letter-spacing: 0.06em;
+    color: var(--color-acero);
     font-variant-numeric: tabular-nums;
   }
 
-  /* Cinta de categorías */
-  .cinta {
-    display: flex;
-    width: max-content;
-    animation: cinta-corre 42s linear infinite;
+  /* ---------- declaración en serif, uso escaso ---------- */
+  .declaracion {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: clamp(26px, 5.4vw, 62px);
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
   }
-  .cinta-marco:hover .cinta {
-    animation-play-state: paused;
+
+  /* ---------- imagen a sangre ---------- */
+  .placa {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    background: var(--color-nube);
   }
-  @keyframes cinta-corre {
-    from {
-      transform: translateX(0);
-    }
-    to {
-      transform: translateX(-50%);
-    }
+  .placa img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .placa figcaption {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    padding: 9px 14px;
+    background: color-mix(in srgb, var(--color-verde-hondo) 88%, transparent);
+    color: #cfd8cb;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+  }
+
+  /* ---------- enlace de texto con subrayado propio ---------- */
+  .vinculo {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 9px;
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--color-verde);
+    text-decoration: none;
+    border-bottom: 1.5px solid var(--color-hoja);
+    padding-bottom: 2px;
+    transition: gap 0.2s ease, color 0.2s ease;
+  }
+  .vinculo:hover {
+    gap: 14px;
+    color: var(--color-hoja-txt);
+  }
+
+  /* ---------- botón: rectángulo puro, sin radio ---------- */
+  .accion {
+    display: inline-block;
+    padding: 15px 26px;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    text-decoration: none;
+    border: 1.5px solid var(--color-verde);
+    color: var(--color-verde);
+    background: transparent;
+    transition:
+      background-color 0.18s ease,
+      color 0.18s ease;
+  }
+  .accion:hover {
+    background: var(--color-verde);
+    color: var(--color-hueso);
+  }
+  .accion-llena {
+    background: var(--color-verde);
+    color: var(--color-hueso);
+  }
+  .accion-llena:hover {
+    background: var(--color-verde-hondo);
+    border-color: var(--color-verde-hondo);
+    color: #fff;
+  }
+  .accion-luz {
+    border-color: #6c8a70;
+    color: #dfe5da;
+  }
+  .accion-luz:hover {
+    background: var(--color-hoja);
+    border-color: var(--color-hoja);
+    color: #13240a;
   }
 }
 
-/* --------------------------------------------------------- entrada al cargar */
-@media (prefers-reduced-motion: no-preference) {
-  .entra {
-    animation: entra 0.65s cubic-bezier(0.2, 0.7, 0.3, 1) both;
-  }
-  .entra-1 { animation-delay: 0.06s; }
-  .entra-2 { animation-delay: 0.14s; }
-  .entra-3 { animation-delay: 0.22s; }
-  .entra-4 { animation-delay: 0.3s; }
 
-  @keyframes entra {
+/* =========================================================
+   CAPA DE MOVIMIENTO
+   La metáfora es un documento que se compone solo: los filetes
+   se trazan, las filas entran y las imágenes se revelan. Casi
+   todo va con animaciones guiadas por el scroll, sin JavaScript.
+
+   Regla firme: el estado EN REPOSO es siempre el visible. Si el
+   navegador no soporta scroll-driven animations, o si la persona
+   pidió menos movimiento, el contenido simplemente está ahí.
+   ========================================================= */
+
+/* Estructura del titular por líneas: no depende del movimiento. */
+.linea {
+  display: block;
+  overflow: hidden;
+}
+.linea > span {
+  display: block;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* ---------- barra de progreso de lectura ---------- */
+  @supports (animation-timeline: scroll()) {
+    .progreso {
+      position: fixed;
+      inset-inline: 0;
+      top: 0;
+      z-index: 60;
+      height: 2px;
+      transform-origin: 0 50%;
+      background: linear-gradient(90deg, #3cab35 0%, #6bc45e 50%, #e0de00 100%);
+      animation: progreso-avanza linear;
+      animation-timeline: scroll(root block);
+    }
+    @keyframes progreso-avanza {
+      from {
+        transform: scaleX(0);
+      }
+      to {
+        transform: scaleX(1);
+      }
+    }
+  }
+
+  /* ---------- entrada al cargar: portada ---------- */
+  .alza {
+    animation: alza 0.8s cubic-bezier(0.16, 0.84, 0.28, 1) both;
+  }
+  .alza-1 { animation-delay: 0.05s; }
+  .alza-2 { animation-delay: 0.13s; }
+  .alza-3 { animation-delay: 0.21s; }
+  .alza-4 { animation-delay: 0.29s; }
+
+  @keyframes alza {
     from {
       opacity: 0;
-      transform: translateY(14px);
+      transform: translateY(18px);
     }
     to {
       opacity: 1;
       transform: none;
     }
   }
-}
 
-/* ------------------------------------------------- aparición con el scroll
-   Se usa una animación guiada por el scroll. Donde el navegador no la
-   soporta, el contenido simplemente se ve: nunca queda oculto esperando. */
-@media (prefers-reduced-motion: no-preference) {
-  @supports (animation-timeline: view()) {
-    .revela {
-      animation: revela linear both;
-      animation-timeline: view();
-      animation-range: entry 8% cover 26%;
+  /* Titular por líneas: solo la animación va aquí. La estructura de la
+     línea vive fuera de esta media query, porque sin ella el texto se
+     pegaría en un mismo renglón. */
+  .linea > span {
+    animation: linea-sube 0.95s cubic-bezier(0.16, 0.84, 0.28, 1) both;
+  }
+  .linea:nth-of-type(2) > span {
+    animation-delay: 0.1s;
+  }
+  @keyframes linea-sube {
+    from {
+      transform: translateY(102%);
     }
-    @keyframes revela {
+    to {
+      transform: none;
+    }
+  }
+
+  /* ---------- guiadas por el scroll ---------- */
+  @supports (animation-timeline: view()) {
+    .aparece {
+      animation: aparece linear both;
+      animation-timeline: view();
+      animation-range: entry 4% cover 24%;
+    }
+    @keyframes aparece {
       from {
         opacity: 0;
-        transform: translateY(26px);
+        transform: translateY(22px);
+      }
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    /* El filete se traza de izquierda a derecha, como una regla de dibujo. */
+    .clausula::after,
+    .traza {
+      transform-origin: 0 50%;
+      animation: traza linear both;
+      animation-timeline: view();
+      animation-range: entry 10% cover 20%;
+    }
+    @keyframes traza {
+      from {
+        transform: scaleX(0);
+      }
+      to {
+        transform: scaleX(1);
+      }
+    }
+
+    /* Las filas del índice entran de una en una al alcanzarlas. */
+    .indice > li {
+      animation: fila linear both;
+      animation-timeline: view();
+      animation-range: entry 2% cover 18%;
+    }
+    @keyframes fila {
+      from {
+        opacity: 0;
+        transform: translateY(16px);
+      }
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    /* La imagen se descubre desde abajo y suelta el acercamiento. */
+    .placa img {
+      animation: revela-foto linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 40%;
+    }
+    @keyframes revela-foto {
+      from {
+        clip-path: inset(18% 0 0 0);
+        transform: scale(1.1);
+      }
+      to {
+        clip-path: inset(0 0 0 0);
+        transform: scale(1);
+      }
+    }
+
+    /* La declaración en serif crece muy levemente al entrar. */
+    .declaracion {
+      animation: declara linear both;
+      animation-timeline: view();
+      animation-range: entry 6% cover 30%;
+    }
+    @keyframes declara {
+      from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.985);
       }
       to {
         opacity: 1;
@@ -546,18 +910,111 @@
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  /* Sin movimiento, la cinta se convierte en un listado que se acomoda solo
-     y la copia duplicada sobra: se oculta para no repetir el contenido. */
-  .cinta {
-    animation: none;
-    flex-wrap: wrap;
-    width: 100%;
+/* =========================================================
+   INTERACCIÓN — sí aplica con movimiento reducido, porque
+   responde a una acción de la persona, no al scroll.
+   ========================================================= */
+
+@layer components {
+  /* La cabecera de cláusula se queda fija mientras se lee la sección.
+     Solo en pantallas grandes: en móvil la barra superior ya ocupa
+     ese espacio y la cláusula quedaría escondida detrás. */
+  @media (min-width: 1024px) {
+    .clausula {
+      position: sticky;
+      top: 108px;
+      z-index: 20;
+      background: var(--tono-seccion, transparent);
+      padding-bottom: 14px;
+    }
   }
-  .cinta > [aria-hidden="true"] {
-    display: none;
+
+  /* Filas del índice: la fila reacciona entera, no solo el enlace. */
+  .indice > li {
+    position: relative;
+    transition:
+      background-color 0.3s ease,
+      padding-left 0.3s cubic-bezier(0.16, 0.84, 0.28, 1);
   }
-  .filete::after {
-    animation: none;
+  @media (min-width: 900px) {
+    .indice > li:hover {
+      background: color-mix(in srgb, var(--color-hoja) 7%, transparent);
+      padding-left: 14px;
+    }
+  }
+  .indice .n,
+  .indice .t {
+    transition: color 0.25s ease;
+  }
+  .indice > li:hover .n {
+    color: var(--color-hoja);
+  }
+
+  /* Filas de especificación: el rótulo se enciende al pasar. */
+  .spec > div {
+    transition: background-color 0.3s ease;
+  }
+  @media (min-width: 900px) {
+    .spec > div:hover {
+      background: color-mix(in srgb, var(--color-hoja) 5%, transparent);
+    }
+  }
+  .spec dt,
+  .spec .k {
+    transition: color 0.25s ease;
+  }
+  .spec > div:hover dt,
+  .spec > div:hover .k {
+    color: var(--color-hoja-txt);
+  }
+
+  /* Botón: el relleno barre desde la izquierda. */
+  .accion {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .accion::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--color-verde);
+    transform: scaleX(0);
+    transform-origin: 0 50%;
+    transition: transform 0.35s cubic-bezier(0.16, 0.84, 0.28, 1);
+  }
+  .accion:hover::before {
+    transform: scaleX(1);
+  }
+  .accion-llena::before {
+    background: var(--color-verde-hondo);
+  }
+  .accion-luz::before {
+    background: var(--color-hoja);
+  }
+
+  /* La foto se acerca apenas al pasar el cursor. */
+  .placa img {
+    transition: transform 0.7s cubic-bezier(0.16, 0.84, 0.28, 1);
+  }
+  @media (hover: hover) {
+    .placa:hover img {
+      transform: scale(1.03);
+    }
+  }
+  .placa figcaption {
+    transition: background-color 0.3s ease;
+  }
+
+  /* Tonos de sección, para que la cláusula fija tape lo que pasa detrás. */
+  .tono-papel {
+    --tono-seccion: var(--color-hueso);
+  }
+  .tono-nube {
+    --tono-seccion: var(--color-nube);
+  }
+  .tono-tinta {
+    --tono-seccion: var(--color-verde-hondo);
   }
 }

@@ -1,158 +1,136 @@
 import type { Metadata } from "next";
-import { Band, BandHead, Cta, Grid, PageHead } from "@/components/ui";
+import { Cierre, Clausula, Declaracion, Portadilla, Seccion, Specs } from "@/components/hoja";
 
 export const metadata: Metadata = {
   title: "Qué fabricamos",
   description:
-    "Categorías y formatos que fabricamos: tratamiento facial, cuidado capilar, cuidado corporal e higiene doméstica, con activos de la biodiversidad peruana.",
+    "Categorías y formatos que fabricamos: tratamiento facial, cuidado capilar y cuidado corporal, con activos de la biodiversidad peruana.",
   alternates: { canonical: "/productos" },
 };
 
-const FACIAL: [string, string, string][] = [
-  [
-    "Limpieza",
-    "Leche limpiadora, gel limpiador facial, jabón exfoliante en gel",
-    "150 g · 220 g · 240 mL",
-  ],
-  ["Tónicos y brumas", "Loción tonificante, bruma facial", "240 mL"],
-  [
-    "Cremas y geles crema",
-    "Gel crema antiedad, crema con vitamina C, hidratantes",
-    "50 g",
-  ],
-  [
-    "Sérums",
-    "Sérum de ácido hialurónico, sérum hidratante epidérmico",
-    "30 mL",
-  ],
-  [
-    "Exfoliantes y mascarillas",
-    "Exfoliante con scrub de bambú, mascarilla peel-off",
-    "150 g",
-  ],
+type Linea = { formato: string; ejemplos: string; presentacion: string };
+
+const FACIAL: Linea[] = [
+  { formato: "Limpieza", ejemplos: "Leche limpiadora, gel limpiador facial, jabón exfoliante en gel", presentacion: "150 g · 220 g · 240 mL" },
+  { formato: "Tónicos y brumas", ejemplos: "Loción tonificante, bruma facial", presentacion: "240 mL" },
+  { formato: "Cremas y geles crema", ejemplos: "Gel crema antiedad, crema con vitamina C, hidratantes", presentacion: "50 g" },
+  { formato: "Sérums", ejemplos: "Sérum de ácido hialurónico, sérum hidratante epidérmico", presentacion: "30 mL" },
+  { formato: "Exfoliantes y mascarillas", ejemplos: "Exfoliante con scrub de bambú, mascarilla peel-off", presentacion: "150 g" },
 ];
 
-const OTRAS = [
-  {
-    eyebrow: "Capilar",
-    titulo: "Cuidado del cabello",
-    texto:
-      "Shampoos, acondicionadores y tratamientos, incluyendo líneas para salón profesional y formatos de reventa.",
-  },
-  {
-    eyebrow: "Corporal",
-    titulo: "Cuidado corporal",
-    texto:
-      "Cremas hidratantes y de masaje, geles de baño, splash perfumados y jabones. Trabajamos familias completas de fragancias: manzanilla, frutos rojos, brisa marina, hierba luisa, maracuyá, lavanda, coco y cítrico.",
-  },
-  {
-    eyebrow: "Hogar",
-    titulo: "Higiene doméstica",
-    texto:
-      "Limpiadores, lavavajillas y productos de cuidado del hogar, en línea separada de la cosmética.",
-  },
+const CORPORAL: Linea[] = [
+  { formato: "Cremas", ejemplos: "Crema hidratante natural, crema para masajes con hierba luisa", presentacion: "150 g" },
+  { formato: "Baño", ejemplos: "Gel de baño con pH equilibrado", presentacion: "430 mL" },
+  { formato: "Splash", ejemplos: "Splash gel perfumado, humectante y no comedogénico", presentacion: "240 mL" },
 ];
 
-const ACTIVOS = [
-  "Sacha inchi",
-  "Maca",
+const OTRAS: [string, string][] = [
+  ["Cuidado capilar", "Shampoos, acondicionadores y tratamientos, en formatos de reventa y de salón profesional."],
+];
+
+const FRAGANCIAS = [
+  "Flor de manzanilla",
+  "Frutos rojos",
+  "Brisa marina",
   "Hierba luisa",
-  "Avena",
-  "Caléndula",
-  "Scrub de bambú",
-  "Ácido hialurónico",
-  "Argireline",
-  "Vitamina C",
-  "Vitamina E",
-  "Alantoína",
+  "Maracuyá",
+  "Lavanda",
+  "Violeta",
+  "Coco",
 ];
+
+const ACTIVOS: [string, string][] = [
+  ["De origen peruano", "Sacha inchi · maca · hierba luisa · avena · caléndula · scrub de bambú"],
+  ["De uso internacional", "Ácido hialurónico · argirelina · vitamina C · vitamina E · alantoína"],
+];
+
+function TablaLinea({ filas }: { filas: Linea[] }) {
+  return (
+    <dl className="spec">
+      {filas.map((f) => (
+        <div key={f.formato} className="sm:!grid-cols-[148px_minmax(0,1fr)_auto]">
+          <dt>{f.formato}</dt>
+          <dd>{f.ejemplos}</dd>
+          <dd className="dato whitespace-nowrap sm:text-right">{f.presentacion}</dd>
+        </div>
+      ))}
+    </dl>
+  );
+}
 
 export default function Page() {
   return (
     <>
-      <PageHead
-        eyebrow="Qué fabricamos"
+      <Portadilla
+        codigo="Ficha 04 · Portafolio"
         titulo="Categorías y formatos"
-        texto="Fabricamos productos de tratamiento facial, cuidado capilar, cuidado corporal e higiene doméstica. Si tu producto entra aquí, podemos hacerlo bajo tu marca."
+        lede="Fabricamos tratamiento facial, cuidado capilar y cuidado corporal. Si tu producto entra aquí, podemos hacerlo bajo tu marca."
+        ficha={[
+          ["Categorías", "Tratamiento facial · Cuidado capilar · Cuidado corporal"],
+          ["Rango de formatos", "30 mL – 430 mL · 50 g – 220 g"],
+          ["Clase", "03 de la Clasificación Internacional"],
+          ["Validación", "Toda afirmación de eficacia la revisa Dirección Técnica antes de imprimirse"],
+        ]}
       />
 
-      <Band tono="blanco">
-        <BandHead
-          eyebrow="Tratamiento facial"
-          titulo="Facial"
-          texto="La categoría con mayor desarrollo en nuestro portafolio, tanto en maquila como en marcas propias."
-        />
-        <div className="tabla">
-          <table>
-            <thead>
-              <tr>
-                <th scope="col">Formato</th>
-                <th scope="col">Ejemplos de producto</th>
-                <th scope="col">Presentaciones habituales</th>
-              </tr>
-            </thead>
-            <tbody>
-              {FACIAL.map(([formato, ejemplos, presentaciones]) => (
-                <tr key={formato}>
-                  <td>
-                    <strong>{formato}</strong>
-                  </td>
-                  <td>{ejemplos}</td>
-                  <td>{presentaciones}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+      <Seccion>
+        <Clausula n="01" titulo="Tratamiento facial" />
+        <div className="mb-10 grid gap-6 lg:grid-cols-[1fr_1fr] lg:gap-20">
+          <h2 className="aparece titular-medio max-w-[10ch] text-verde">Facial</h2>
+          <p className="max-w-[46ch] self-end text-[15.5px] text-acero">
+            La categoría con mayor desarrollo en nuestro portafolio, tanto en maquila
+            como en marcas propias.
+          </p>
         </div>
-      </Band>
+        <TablaLinea filas={FACIAL} />
+      </Seccion>
 
-      <Band tono="nube">
-        <Grid cols={3}>
-          {OTRAS.map((o) => (
-            <article key={o.titulo} className="card card-viva">
-              <span className="eyebrow">{o.eyebrow}</span>
-              <h3>{o.titulo}</h3>
-              <p>{o.texto}</p>
-            </article>
-          ))}
-        </Grid>
-      </Band>
+      <Seccion tono="nube">
+        <Clausula n="02" titulo="Cuidado corporal" />
+        <h2 className="aparece titular-medio mb-10 max-w-[10ch] text-verde">Corporal</h2>
+        <TablaLinea filas={CORPORAL} />
 
-      <Band tono="blanco">
-        <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-14">
-          <div>
-            <span className="eyebrow">Formulación</span>
-            <h2 className="mt-3 text-[clamp(23px,3.2vw,32px)]">Activos que trabajamos</h2>
-            <p className="mt-4 text-acero">
-              Combinamos activos de uso internacional —ácido hialurónico, argireline,
-              vitaminas C y E, alantoína— con ingredientes de la biodiversidad peruana,
-              que además reducen la exposición al tipo de cambio en la cadena de
-              suministro.
-            </p>
-            <ul className="mt-5 flex flex-wrap gap-1.5">
-              {ACTIVOS.map((a) => (
-                <li
-                  key={a}
-                  className="rounded-[2px] border border-linea px-2.5 py-1 text-[12.5px] text-acero"
-                >
-                  {a}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="aviso">
-            <span className="aviso-tag">Nota técnica</span>
-            Las presentaciones listadas son las de uso más frecuente en nuestras líneas;
-            el formato y el envase se definen en el desarrollo de cada proyecto.{" "}
-            <strong>
-              Toda afirmación de eficacia cosmética se valida con la Dirección Técnica
-            </strong>{" "}
-            antes de imprimirse en etiqueta o publicidad.
-          </div>
+        <div className="mt-12">
+          <span className="rotulo rotulo-verde">Familia de fragancias</span>
+          <ul className="regla mt-4 grid grid-cols-2 gap-x-8 sm:grid-cols-4">
+            {FRAGANCIAS.map((f, i) => (
+              <li key={f} className="regla-fina flex items-baseline gap-3 py-3 text-[14.5px] text-acero">
+                <span className="dato text-acero-claro">{String(i + 1).padStart(2, "0")}</span>
+                {f}
+              </li>
+            ))}
+          </ul>
         </div>
-      </Band>
+      </Seccion>
 
-      <Cta
+      <Seccion>
+        <Clausula n="03" titulo="Otras líneas" />
+        <Specs filas={OTRAS} />
+      </Seccion>
+
+      <Seccion tono="tinta" compacta>
+        <div className="grid gap-10 lg:grid-cols-[1.2fr_1fr] lg:items-end lg:gap-20">
+          <Declaracion oscuro pie="Formulación">
+            La biodiversidad peruana como decisión técnica, no como etiqueta.
+          </Declaracion>
+          <p className="max-w-[44ch] text-[15.5px] text-[#b0b09c]">
+            Incorporar activos locales reduce a la vez el impacto ambiental y la
+            exposición al tipo de cambio en la cadena de suministro.
+          </p>
+        </div>
+      </Seccion>
+
+      <Seccion>
+        <Clausula n="04" titulo="Activos que trabajamos" />
+        <Specs filas={ACTIVOS} />
+        <p className="regla mt-10 max-w-[64ch] pt-5 text-[14.5px] text-acero-claro">
+          Las presentaciones listadas son las de uso más frecuente en nuestras líneas;
+          el formato y el envase se definen en el desarrollo de cada proyecto. Nombramos
+          el activo, nunca su concentración.
+        </p>
+      </Seccion>
+
+      <Cierre
         titulo="¿Buscas un formato que no está en la lista?"
         texto="Escríbenos con el concepto. Nuestra área de I+D evalúa si es fabricable en nuestras líneas."
       />

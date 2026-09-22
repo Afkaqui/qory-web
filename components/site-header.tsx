@@ -6,19 +6,18 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { EMPRESA, MENU } from "@/lib/empresa";
 
-function Candado({ className = "" }: { className?: string }) {
+function Candado() {
   return (
     <svg
-      className={className}
       viewBox="0 0 16 16"
-      width="13"
-      height="13"
+      width="12"
+      height="12"
       fill="none"
       stroke="currentColor"
-      strokeWidth="1.6"
+      strokeWidth="1.7"
       aria-hidden="true"
     >
-      <rect x="3" y="7" width="10" height="7" rx="1.5" />
+      <rect x="3" y="7" width="10" height="7" />
       <path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2" />
     </svg>
   );
@@ -30,30 +29,29 @@ export function SiteHeader() {
   const [rutaPrevia, setRutaPrevia] = useState(pathname);
   const ventas = EMPRESA.telefonos[0];
 
-  // Cerrar el menú al cambiar de página, ajustando el estado durante el render
-  // (patrón recomendado por React, sin efecto ni renders en cascada).
   if (rutaPrevia !== pathname) {
     setRutaPrevia(pathname);
     setAbierto(false);
   }
 
   return (
-    <header className="sticky top-[env(safe-area-inset-top,0px)] z-50 bg-hueso/93 backdrop-blur-[10px] backdrop-saturate-150">
-      {/* Barra de servicio: contacto comercial y acceso interno.
-          Se separa del menú porque el menú es para clientes y esto no. */}
+    <header className="sticky top-[env(safe-area-inset-top,0px)] z-50 border-b border-linea bg-hueso">
+      {/* Renglón de servicio: teléfono comercial y acceso interno. */}
       <div className="hidden border-b border-linea lg:block">
-        <div className="wrap">
-          <div className="flex min-h-[38px] items-center justify-end gap-5 text-[12.5px]">
+        <div className="hoja flex min-h-[34px] items-center gap-6">
+          <span className="rotulo">
+            {EMPRESA.razon} · RUC {EMPRESA.ruc}
+          </span>
+          <div className="ml-auto flex items-center gap-6">
             <a
-              className="text-acero transition-colors hover:text-hoja-txt"
+              className="dato transition-colors hover:text-hoja-txt"
               href={`tel:+51${ventas.numero.replace(/\s/g, "")}`}
             >
               Ventas {ventas.numero}
             </a>
-            <span aria-hidden="true" className="h-3.5 w-px bg-linea" />
             <Link
               href="/intranet"
-              className="inline-flex items-center gap-1.5 rounded-[2px] border border-linea px-2.5 py-1 font-medium text-verde transition-colors hover:border-lima hover:bg-lima/15 hover:text-hoja-txt"
+              className="dato inline-flex items-center gap-1.5 transition-colors hover:text-hoja-txt"
             >
               <Candado />
               Intranet
@@ -62,20 +60,16 @@ export function SiteHeader() {
         </div>
       </div>
 
-      <div className="wrap border-b border-linea lg:border-b-0">
-        <div className="flex min-h-[70px] items-center gap-6 border-b-0 lg:border-b lg:border-linea">
-          <Link
-            href="/"
-            aria-label="Qory Lab, inicio"
-            className="shrink-0 transition-transform duration-300 hover:scale-[1.03]"
-          >
+      <div className="hoja">
+        <div className="flex min-h-[74px] items-center gap-8">
+          <Link href="/" aria-label="Qory Lab, inicio" className="shrink-0">
             <Image
               src="/img/logo.png"
               alt="Qory Laboratorios"
               width={539}
               height={132}
               priority
-              className="h-11 w-auto sm:h-12"
+              className="h-10 w-auto sm:h-11"
             />
           </Link>
 
@@ -84,9 +78,9 @@ export function SiteHeader() {
             aria-expanded={abierto}
             aria-controls="nav-menu"
             onClick={() => setAbierto((v) => !v)}
-            className="ml-auto cursor-pointer rounded-[2px] border border-linea px-3 py-2.5 text-[13px] font-semibold text-verde transition-colors hover:border-lima hover:bg-lima/15 lg:hidden"
+            className="rotulo ml-auto cursor-pointer border border-linea px-3 py-2.5 text-verde transition-colors hover:border-verde lg:hidden"
           >
-            {abierto ? "Cerrar" : "Menú"}
+            {abierto ? "Cerrar" : "Índice"}
           </button>
 
           <nav aria-label="Principal" className="contents">
@@ -94,7 +88,7 @@ export function SiteHeader() {
               id="nav-menu"
               className={`${
                 abierto ? "flex" : "hidden"
-              } absolute inset-x-0 top-full flex-col items-stretch gap-0 border-b border-linea bg-hueso px-5 pt-2 pb-4.5 lg:ml-auto lg:flex lg:static lg:flex-row lg:items-center lg:gap-1 lg:border-0 lg:bg-transparent lg:p-0`}
+              } absolute inset-x-0 top-full flex-col items-stretch border-b border-linea bg-hueso px-5 pb-5 lg:ml-auto lg:flex lg:static lg:flex-row lg:items-center lg:gap-7 lg:border-0 lg:p-0`}
             >
               {MENU.map((m) => {
                 const activo = pathname === m.href;
@@ -103,8 +97,10 @@ export function SiteHeader() {
                     <Link
                       href={m.href}
                       aria-current={activo ? "page" : undefined}
-                      className={`enlace-nav block border-b border-linea px-1 py-3.5 text-sm font-medium lg:border-0 lg:px-2.5 lg:py-2 ${
-                        activo ? "esta-aqui text-hoja-txt" : "text-verde"
+                      className={`block border-b border-linea py-3.5 text-[14.5px] transition-colors lg:border-0 lg:py-2 lg:text-[13.5px] ${
+                        activo
+                          ? "font-semibold text-verde lg:border-b-[1.5px] lg:border-hoja lg:pb-1.5"
+                          : "text-acero hover:text-verde"
                       }`}
                     >
                       {m.texto}
@@ -112,20 +108,15 @@ export function SiteHeader() {
                   </li>
                 );
               })}
-              <li className="mt-3 lg:mt-0 lg:ml-2">
-                <Link
-                  href="/contacto"
-                  className="btn-brillo block rounded-[2px] bg-verde px-4.5 py-2.5 text-center text-sm font-semibold text-hueso"
-                >
-                  Cotiza tu proyecto
+              <li className="mt-5 lg:mt-0 lg:ml-2">
+                <Link href="/contacto" className="accion accion-llena block text-center lg:py-2.5">
+                  Cotizar
                 </Link>
               </li>
-              {/* En móvil el acceso interno vive al final del menú */}
               <li className="mt-3 lg:hidden">
                 <Link
                   href="/intranet"
-                  aria-current={pathname === "/intranet" ? "page" : undefined}
-                  className="flex items-center justify-center gap-2 rounded-[2px] border border-linea px-4.5 py-2.5 text-sm font-semibold text-verde"
+                  className="accion flex items-center justify-center gap-2"
                 >
                   <Candado />
                   Intranet

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Band, PageHead } from "@/components/ui";
+import { Portadilla, Seccion } from "@/components/hoja";
 import { EMPRESA } from "@/lib/empresa";
 
 export const metadata: Metadata = {
@@ -13,13 +13,13 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <>
-      <PageHead
-        eyebrow="Legal"
+      <Portadilla
+        codigo="Anexo A · Legal"
         titulo="Política de privacidad"
-        texto="Cómo tratamos los datos personales que nos entregas, conforme a la Ley 29733 de Protección de Datos Personales y su reglamento."
+        lede="Cómo tratamos los datos personales que nos entregas, conforme a la Ley 29733 de Protección de Datos Personales y su reglamento."
       />
 
-      <Band tono="blanco">
+      <Seccion>
         <div className="doc">
           <div className="aviso">
             <span className="aviso-tag">Borrador para revisión legal</span>
@@ -86,7 +86,7 @@ export default function Page() {
             indicando la fecha de actualización.
           </p>
         </div>
-      </Band>
+      </Seccion>
     </>
   );
 }

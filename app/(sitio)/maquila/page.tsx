@@ -1,6 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Band, BandHead, Cta, Galeria, Grid, PageHead, Pasos } from "@/components/ui";
+import {
+  Cierre,
+  Clausula,
+  PlacaAncha,
+  Portadilla,
+  Seccion,
+  Specs,
+} from "@/components/hoja";
+import { PASOS } from "@/lib/empresa";
 
 export const metadata: Metadata = {
   title: "Maquila 360° y marca privada",
@@ -9,118 +17,137 @@ export const metadata: Metadata = {
   alternates: { canonical: "/maquila" },
 };
 
-const FAQ = [
-  {
-    p: "¿Cuál es el volumen mínimo?",
-    r: "Depende de la categoría y del formato de envase. Trabajamos tanto por pedido —lotes pequeños de lanzamiento— como por stock planificado para volúmenes altos. Indícanos tu estimado en el briefing y te damos el mínimo exacto.",
-  },
-  {
-    p: "¿Puedo traer mi propia fórmula?",
-    r: "Sí. La evaluamos técnicamente, verificamos que sea fabricable en nuestras líneas y que cumpla la normativa vigente, y la ajustamos contigo si hace falta.",
-  },
-  {
-    p: "¿Quién queda como titular del registro sanitario?",
-    r: "Depende del acuerdo comercial y se define por escrito antes de iniciar. Gestionamos el trámite desde nuestra área de Asuntos Regulatorios.",
-  },
-  {
-    p: "¿Cuánto demora un lanzamiento?",
-    r: "El plazo lo marcan la complejidad de la fórmula, la disponibilidad de envases y el trámite sanitario. Al cotizar te entregamos un cronograma por etapas, no una fecha suelta.",
-  },
-  {
-    p: "¿Se protege mi fórmula?",
-    r: "Firmamos acuerdo de confidencialidad antes de recibir cualquier información técnica. Es práctica estándar en todos nuestros proyectos.",
-  },
-  {
-    p: "¿Fabrican para mi competencia?",
-    r: "Trabajamos con varias marcas del mismo sector, pero cada fórmula desarrollada para un cliente es de uso exclusivo de ese cliente.",
-  },
+const FAQ: [string, string][] = [
+  [
+    "¿Cuál es el volumen mínimo?",
+    "Depende de la categoría y del formato de envase. Trabajamos por pedido —lotes pequeños de lanzamiento— y por stock planificado para volúmenes altos. Indícanos tu estimado en el briefing y te damos el mínimo exacto.",
+  ],
+  [
+    "¿Puedo traer mi propia fórmula?",
+    "Sí. La evaluamos técnicamente, verificamos que sea fabricable en nuestras líneas y que cumpla la normativa vigente, y la ajustamos contigo si hace falta.",
+  ],
+  [
+    "¿Quién queda como titular del registro?",
+    "Depende del acuerdo comercial y se define por escrito antes de iniciar. Gestionamos el trámite desde nuestra área de Asuntos Regulatorios.",
+  ],
+  [
+    "¿Cuánto demora un lanzamiento?",
+    "El plazo lo marcan la complejidad de la fórmula, la disponibilidad de envases y el trámite sanitario. Al cotizar entregamos un cronograma por etapas, no una fecha suelta.",
+  ],
+  [
+    "¿Se protege mi fórmula?",
+    "Firmamos acuerdo de confidencialidad antes de recibir cualquier información técnica. Es práctica estándar en todos nuestros proyectos.",
+  ],
+  [
+    "¿Fabrican para mi competencia?",
+    "Trabajamos con varias marcas del mismo sector, pero cada fórmula desarrollada para un cliente es de uso exclusivo de ese cliente.",
+  ],
 ];
 
 export default function Page() {
   return (
     <>
-      <PageHead
-        eyebrow="Servicios"
-        titulo="Maquila 360°: tú vendes, nosotros hacemos el resto"
-        texto="Recibimos tu concepto y ejecutamos el ciclo completo de creación: formulación química, diseño de marca y empaque, gestión regulatoria y entrega del producto terminado, listo para la venta."
+      <Portadilla
+        codigo="Ficha 02 · Servicios"
+        titulo="Tú vendes, nosotros hacemos el resto"
+        lede="Recibimos tu concepto y ejecutamos el ciclo completo: formulación química, diseño de marca y empaque, gestión regulatoria y entrega del producto terminado, listo para la venta."
+        ficha={[
+          ["Modalidades", "Maquila bajo marca del cliente · Desarrollo de marca privada llave en mano"],
+          ["Incluye", "Fórmula, muestras, expediente técnico, notificación sanitaria, producción, envasado y acondicionado"],
+          ["Modelos", "Por pedido (MTO) y por stock planificado (MTS)"],
+          ["Confidencialidad", "Acuerdo firmado antes de recibir información técnica"],
+        ]}
       />
 
-      <Band tono="blanco">
-        <BandHead
-          eyebrow="El proceso"
-          titulo="Cinco etapas, ninguna tercerizada"
-          texto="Este es el flujo real de un pedido de maquila en nuestra planta. Cada etapa tiene un responsable interno y deja registro documentado."
-        />
-        <Pasos />
-      </Band>
+      <Seccion>
+        <Clausula n="01" titulo="El proceso" />
+        <div className="mb-10 grid gap-6 lg:grid-cols-[1fr_1fr] lg:gap-20">
+          <h2 className="aparece titular-medio max-w-[15ch] text-verde">
+            Cinco etapas, ninguna tercerizada
+          </h2>
+          <p className="max-w-[48ch] self-end text-[15.5px] text-acero">
+            Este es el flujo real de un pedido de maquila en nuestra planta. Cada etapa
+            tiene un responsable interno y deja registro documentado.
+          </p>
+        </div>
+        <ol className="indice">
+          {PASOS.map((p, i) => (
+            <li key={p.titulo}>
+              <span className="n">{String(i + 1).padStart(2, "0")}</span>
+              <span className="t">{p.titulo}</span>
+              <span className="d">{p.texto}</span>
+              <span className="meta">Etapa {i + 1} de 5</span>
+            </li>
+          ))}
+        </ol>
+      </Seccion>
 
-      <Band tono="nube">
-        <BandHead eyebrow="Reparto de tareas" titulo="Qué pones tú, qué ponemos nosotros" />
-        <Grid cols={2}>
-          <article className="card card-viva">
-            <h3>Tú aportas</h3>
-            <ul className="check mt-1.5">
-              <li>El concepto de producto y el público al que va dirigido.</li>
-              <li>Tu marca, si ya la tienes registrada. Si no, te acompañamos en el proceso.</li>
-              <li>Preferencias de textura, fragancia y posicionamiento de precio.</li>
-              <li>El volumen estimado y el plazo objetivo de lanzamiento.</li>
-            </ul>
-          </article>
-          <article className="card card-viva border-t-2 border-t-hoja">
-            <h3>Nosotros aportamos</h3>
-            <ul className="check mt-1.5">
-              <li>Desarrollo de la fórmula y muestras hasta tu aprobación.</li>
-              <li>Expediente técnico y notificación sanitaria ante Digemid.</li>
-              <li>Gestión de materias primas, envases y material de empaque.</li>
-              <li>Fabricación, envasado, acondicionado y control de calidad por lote.</li>
-              <li>Producto terminado, liberado y listo para despacho.</li>
-            </ul>
-          </article>
-        </Grid>
-      </Band>
-
-      <Band tono="blanco" id="marca-privada">
-        <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-14">
+      <Seccion tono="nube">
+        <Clausula n="02" titulo="Reparto de tareas" />
+        <div className="grid gap-12 lg:grid-cols-2 lg:gap-20">
           <div>
-            <span className="eyebrow">Llave en mano</span>
-            <h2 className="mt-3 text-[clamp(23px,3.2vw,32px)]">
-              Desarrollo de marca privada
-            </h2>
-            <p className="mt-4 text-acero">
+            <h3 className="aparece titular-chico mb-6 text-verde">Tú aportas</h3>
+            <Specs
+              filas={[
+                ["Concepto", "El producto que quieres y el público al que va dirigido"],
+                ["Marca", "Si ya la tienes registrada. Si no, te acompañamos en el proceso"],
+                ["Preferencias", "Textura, fragancia y posicionamiento de precio"],
+                ["Volumen y plazo", "El estimado y la fecha objetivo de lanzamiento"],
+              ]}
+            />
+          </div>
+          <div>
+            <h3 className="aparece titular-chico mb-6 text-verde">Nosotros aportamos</h3>
+            <Specs
+              filas={[
+                ["Formulación", "Desarrollo de la fórmula y muestras hasta tu aprobación"],
+                ["Regulatorio", "Expediente técnico y notificación sanitaria ante Digemid"],
+                ["Abastecimiento", "Materias primas, envases y material de empaque"],
+                ["Producción", "Fabricación, envasado, acondicionado y control de calidad por lote"],
+                ["Entrega", "Producto terminado, liberado y listo para despacho"],
+              ]}
+            />
+          </div>
+        </div>
+      </Seccion>
+
+      <PlacaAncha clave="acondicionado1" />
+
+      <Seccion id="marca-privada">
+        <Clausula n="03" titulo="Llave en mano" />
+        <div className="grid gap-9 lg:grid-cols-[1fr_1fr] lg:gap-20">
+          <h2 className="aparece titular-medio max-w-[13ch] text-verde">
+            Desarrollo de marca privada
+          </h2>
+          <div className="max-w-[52ch] space-y-5 text-[15.5px] leading-relaxed text-acero">
+            <p>
               Para quien quiere lanzar una marca de cosméticos sin montar una fábrica.
               Tomamos el proyecto desde la idea: definimos el portafolio, formulamos,
               diseñamos el empaque, registramos el producto y lo fabricamos.
             </p>
-            <p className="mt-3.5 text-acero">
-              El resultado es un producto terminado con tu marca, tu registro sanitario y
-              tu fórmula, desarrollada específicamente para ti.
+            <p>
+              El resultado es un producto terminado con tu marca, tu registro sanitario
+              y tu fórmula, desarrollada específicamente para ti.
             </p>
-            <p className="mt-5">
-              <Link className="btn btn-verde" href="/contacto">
+            <p className="pt-3">
+              <Link className="vinculo" href="/contacto">
                 Empezar un proyecto
+                <span aria-hidden="true">→</span>
               </Link>
             </p>
           </div>
-          <Galeria cols={2} claves={["acondicionado1", "dispensacion"]} />
         </div>
-      </Band>
+      </Seccion>
 
-      <Band tono="nube">
-        <BandHead
-          eyebrow="Preguntas frecuentes"
-          titulo="Lo que nos preguntan antes de empezar"
-        />
-        <Grid cols={2}>
-          {FAQ.map((f) => (
-            <article key={f.p} className="card card-viva">
-              <h3>{f.p}</h3>
-              <p>{f.r}</p>
-            </article>
-          ))}
-        </Grid>
-      </Band>
+      <Seccion tono="nube">
+        <Clausula n="04" titulo="Preguntas frecuentes" />
+        <h2 className="aparece titular-medio mb-10 max-w-[16ch] text-verde">
+          Lo que nos preguntan antes de empezar
+        </h2>
+        <Specs filas={FAQ} />
+      </Seccion>
 
-      <Cta
+      <Cierre
         titulo="Pide tu cotización"
         texto="Completa el briefing en dos minutos. Cuanto más concreto, más precisa será nuestra respuesta."
       />

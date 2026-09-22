@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Archivo, Fraunces, IBM_Plex_Mono } from "next/font/google";
 import { EMPRESA } from "@/lib/empresa";
 import "./globals.css";
+import { cn } from "@/lib/utils";
 
 const archivo = Archivo({
   variable: "--font-archivo",
@@ -35,7 +36,9 @@ export const metadata: Metadata = {
     type: "website",
     locale: "es_PE",
     siteName: "Qory Lab",
-    url: EMPRESA.sitio,
+    // Sin `url` fija: si se declara aquí, todas las páginas comparten la de
+    // portada y al compartir una interior se anuncia la URL equivocada.
+    // El canónico de cada página ya cumple esa función.
   },
   alternates: { canonical: "/" },
 };
@@ -48,7 +51,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="es-PE"
-      className={`${archivo.variable} ${fraunces.variable} ${plexMono.variable} h-full antialiased`}
+      className={cn(
+        "h-full font-sans antialiased",
+        archivo.variable,
+        fraunces.variable,
+        plexMono.variable,
+      )}
     >
       <body className="flex min-h-full flex-col">
         <a

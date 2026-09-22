@@ -1,10 +1,7 @@
 /**
  * Datos de la empresa. Fuente única para cabecera, pie, contacto y metadatos.
  *
- * PENDIENTE antes de publicar:
- *  - Crear el alias `comercial@qorylab.com` en el dominio (hoy se usa una
- *    cuenta personal y una cuenta de Gmail declarada ante SUNAT).
- *  - Confirmar el horario de atención con Jefatura de Ventas.
+ * Datos confirmados por la empresa el 22/09/2026.
  */
 
 export const EMPRESA = {
@@ -15,15 +12,18 @@ export const EMPRESA = {
   direccion: "APV. Inca Manco Cápac 2.ª etapa, Calle 4, Mz. F, Lt. 4–5",
   distrito: "San Juan de Lurigancho, Lima, Perú",
   referencia: "Av. Los Claveles, frente a la fábrica Celima",
-  correo: "comercial@qorylab.com",
-  // El primero es el contacto comercial: es el que se muestra primero en todas partes.
+  // Buzón de área, no personal: sobrevive a cambios de puesto y no expone
+  // el nombre de nadie en una página pública.
+  correo: "ventas01@qorylab.com",
   telefonos: [
-    { numero: "945 217 404", rol: "Ventas" },
-    { numero: "934 607 692", rol: "Planta" },
-    { numero: "983 420 486", rol: "Planta" },
+    { numero: "936 518 211", rol: "Central · Administración" },
+    { numero: "936 516 958", rol: "Gerencia General" },
   ],
-  horario: ["Lunes a viernes, de 8:00 a 17:30", "Sábados, de 8:00 a 12:30"],
-  sitio: "https://qorylab.com",
+  horario: ["Lunes a viernes, de 8:00 a 17:30"],
+  // El sitio vive en el subdominio: el dominio raíz sigue en el hosting
+  // anterior. De aquí salen metadataBase, Open Graph, sitemap y canónicos,
+  // así que al mover el sitio al dominio raíz basta con cambiar esta línea.
+  sitio: "https://web.qorylab.com",
   redes: {
     linkedin: "https://www.linkedin.com/company/qory-laboratorios-sac/",
     facebook: "https://www.facebook.com/qorylaboratorio/",
@@ -121,9 +121,5 @@ export const FOTOS: Record<string, Foto> = {
   esclusa: {
     archivo: "produccion-esclusa-me-pt",
     pie: "Esclusa entre material de empaque y producto terminado",
-  },
-  higiene: {
-    archivo: "area-de-productos-de-higiene-domestica",
-    pie: "Línea de higiene doméstica",
   },
 };

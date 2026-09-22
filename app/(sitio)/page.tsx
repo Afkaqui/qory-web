@@ -1,308 +1,224 @@
-import Image from "next/image";
 import Link from "next/link";
-import { Cinta } from "@/components/cinta";
-import { Contador } from "@/components/contador";
-import { Band, BandHead, Cta, Declara, Galeria, Grid, Pasos } from "@/components/ui";
+import {
+  Cierre,
+  Clausula,
+  Declaracion,
+  Indice,
+  PlacaAncha,
+  Seccion,
+  Specs,
+} from "@/components/hoja";
+import { EMPRESA, PASOS } from "@/lib/empresa";
 
 const SERVICIOS = [
   {
-    n: "01 — B2B",
     titulo: "Maquila profesional",
-    texto:
-      "Fabricamos tu producto bajo tu marca, con tu fórmula o con la nuestra. Control de calidad y trazabilidad de lote en cada etapa.",
+    detalle:
+      "Fabricamos tu producto bajo tu marca, con tu fórmula o con la nuestra. Control en proceso y trazabilidad por lote en cada etapa.",
+    meta: "B2B",
     href: "/maquila",
-    enlace: "Ver el proceso",
   },
   {
-    n: "02 — Llave en mano",
     titulo: "Desarrollo de marca privada",
-    texto:
-      "Desde el concepto hasta el producto en góndola: fórmula, empaque, registro sanitario y producción. Tú te concentras en vender.",
+    detalle:
+      "Del concepto a la góndola: fórmula, empaque, notificación sanitaria y producción. Tú te concentras en vender.",
+    meta: "Llave en mano",
     href: "/maquila#marca-privada",
-    enlace: "Cómo funciona",
   },
   {
-    n: "03 — B2C",
-    titulo: "Nuestras marcas",
-    texto:
-      "Daya y Activen: líneas propias de tratamiento facial, capilar y corporal, disponibles para farmacias, importadoras y salones.",
+    titulo: "Marcas propias",
+    detalle:
+      "Daya, de cuidado facial, capilar y corporal. Activen, para el mercado profesional de la belleza.",
+    meta: "B2C",
     href: "/marcas",
-    enlace: "Conocer las marcas",
   },
 ];
 
 const CATEGORIAS = [
   {
     titulo: "Tratamiento facial",
-    texto:
-      "Limpiadores, tónicos, sérums, geles crema, cremas hidratantes y antiedad, exfoliantes y mascarillas.",
+    detalle: "Leches y geles limpiadores, tónicos, brumas, sérums, geles crema, exfoliantes y mascarillas.",
+    meta: "30 mL – 240 mL",
   },
   {
     titulo: "Cuidado capilar",
-    texto: "Shampoos, acondicionadores, tratamientos y líneas para salón profesional.",
+    detalle: "Shampoos, acondicionadores y tratamientos, en formatos de reventa y de salón profesional.",
+    meta: "Línea salón",
   },
   {
     titulo: "Cuidado corporal",
-    texto:
-      "Cremas hidratantes y de masaje, geles de baño, splash perfumados y jabones en gel.",
+    detalle: "Cremas hidratantes y de masaje, geles de baño, splash perfumados y jabones en gel.",
+    meta: "150 g – 430 mL",
   },
-  {
-    titulo: "Higiene doméstica",
-    texto:
-      "Limpiadores, lavavajillas y productos de cuidado del hogar de origen natural.",
-  },
+];
+
+const MARCAS = [
+  { titulo: "Daya", detalle: "Tratamiento facial, corporal y capilar. Ocho fragancias en baño y splash.", meta: "Clase 03" },
+  { titulo: "Activen", detalle: "Dermocosmética facial para canal farmacia y boticas.", meta: "Clase 03" },
+    { titulo: "Kuyaway", detalle: "Cuidado personal e higiene.", meta: "Clase 03" },
+  { titulo: "Kibo", detalle: "Marca registrada del portafolio.", meta: "Clase 03" },
 ];
 
 export default function Page() {
   return (
     <>
-      {/* ------------------------------------------------------- portada */}
-      <section className="relative overflow-hidden bg-verde-hondo py-14 sm:py-18 lg:py-24">
-        {/* Halo de marca, muy tenue, detrás del titular */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -top-40 -left-40 h-[520px] w-[520px] rounded-full opacity-25 blur-[110px]"
-          style={{
-            background:
-              "radial-gradient(circle, #8cc63f 0%, #4fa62f 45%, transparent 70%)",
-          }}
-        />
-        <div className="wrap relative">
-          <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-[1.15fr_1fr] lg:gap-14">
-            <div>
-              <span className="eyebrow eyebrow-luz filete entra">
-                Laboratorio cosmético peruano · Desde 2017
+      {/* ========================================================= portada */}
+      <section className="bg-hueso pt-10 pb-12 lg:pt-16 lg:pb-16">
+        <div className="hoja">
+          <div className="regla-firme alza flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2 pt-3">
+            <span className="rotulo rotulo-verde">Laboratorio cosmético · Lima, Perú</span>
+            <span className="dato">
+              RUC {EMPRESA.ruc} · CIIU 2023 · Desde {EMPRESA.desde}
+            </span>
+          </div>
+
+          <h1 className="titular mt-10 max-w-[11ch] text-verde lg:mt-14">
+            <span className="linea">
+              <span>De la fórmula</span>
+            </span>
+            <span className="linea">
+              <span>
+                al anaquel<span className="text-hoja">.</span>
               </span>
-              <h1 className="entra entra-1 mt-4 text-[clamp(34px,6.2vw,66px)] tracking-[-0.03em] text-[#f1f5ee]">
-                De la fórmula
-                <br />
-                al{" "}
-                <em className="texto-marca font-serif font-normal not-italic">
-                  anaquel
-                </em>
-                <span className="text-amarillo">.</span>
-              </h1>
-              <p className="entra entra-2 mt-5 max-w-[52ch] text-[clamp(16px,1.8vw,19px)] text-[#b8c2b4]">
-                Desarrollamos, registramos y fabricamos productos cosméticos bajo tu
-                marca. Tú traes la idea y el mercado; nosotros ponemos la química, el
-                expediente sanitario y la línea de producción.
-              </p>
-              <div className="entra entra-3 mt-7 flex flex-wrap gap-3">
-                <Link className="btn btn-hoja btn-brillo" href="/contacto">
+            </span>
+          </h1>
+
+          <div className="mt-10 grid gap-10 lg:mt-14 lg:grid-cols-[1fr_1fr] lg:gap-20">
+            <p className="alza alza-2 max-w-[46ch] text-[clamp(17px,2vw,22px)] leading-[1.45] text-acero">
+              Desarrollamos, registramos y fabricamos productos cosméticos bajo tu
+              marca. Tú traes la idea y el mercado; nosotros ponemos la química, el
+              expediente sanitario y la línea de producción.
+            </p>
+
+            <div>
+              <Specs
+                filas={[
+                  ["Actividad", "Desarrollo, fabricación, envasado y acondicionado de productos cosméticos"],
+                  ["Buenas prácticas", "Manufactura y almacenamiento bajo lineamientos BPM. Certificación en gestión ante Digemid"],
+                  ["Planta", "San Juan de Lurigancho, Lima. Producción, I+D, control de calidad, asuntos regulatorios y almacenes"],
+                  ["Alcance", "Lima · Arequipa · La Libertad · Chiclayo · Trujillo · La Merced"],
+                  ["Marcas propias", "Seis, registradas en la clase 03"],
+                ]}
+              />
+              <div className="alza alza-4 mt-8 flex flex-wrap gap-3">
+                <Link className="accion accion-llena" href="/contacto">
                   Cotiza tu proyecto
                 </Link>
-                <Link className="btn btn-linea" href="/maquila">
+                <Link className="accion" href="/maquila">
                   Cómo trabajamos
                 </Link>
               </div>
             </div>
-
-            <div className="foto-viva entra entra-2 overflow-hidden rounded-[3px] border border-white/12">
-              <Image
-                src="/img/planta/control-de-calidad-microbiologia.jpg"
-                alt="Laboratorio de control de calidad microbiológico de Qory Laboratorios"
-                width={1400}
-                height={1050}
-                priority
-                sizes="(max-width: 1024px) 100vw, 45vw"
-                className="aspect-4/3 w-full object-cover contrast-105 saturate-85"
-              />
-            </div>
           </div>
-
-          {/* Cifras: el servidor ya imprime el valor final; la cuenta solo lo anima */}
-          <dl className="entra entra-4 mt-10 grid grid-cols-2 gap-5 border-t border-white/14 pt-5.5 lg:grid-cols-4">
-            <div>
-              <dt className="sr-only">Año de fundación</dt>
-              <dd>
-                <strong className="cifra block text-[clamp(24px,3.2vw,34px)] tracking-[-0.02em] text-hoja-luz">
-                  2017
-                </strong>
-                <span className="mt-1 block font-mono text-[10.5px] tracking-[0.12em] text-[#7e8d7c] uppercase">
-                  Año de fundación
-                </span>
-              </dd>
-            </div>
-            <div>
-              <dt className="sr-only">Años fabricando</dt>
-              <dd>
-                <strong className="cifra block text-[clamp(24px,3.2vw,34px)] tracking-[-0.02em] text-hoja-luz">
-                  <Contador hasta={9} sufijo=" años" />
-                </strong>
-                <span className="mt-1 block font-mono text-[10.5px] tracking-[0.12em] text-[#7e8d7c] uppercase">
-                  Fabricando en planta propia
-                </span>
-              </dd>
-            </div>
-            <div>
-              <dt className="sr-only">Marcas registradas</dt>
-              <dd>
-                <strong className="cifra block text-[clamp(24px,3.2vw,34px)] tracking-[-0.02em] text-hoja-luz">
-                  <Contador hasta={6} />
-                </strong>
-                <span className="mt-1 block font-mono text-[10.5px] tracking-[0.12em] text-[#7e8d7c] uppercase">
-                  Marcas registradas
-                </span>
-              </dd>
-            </div>
-            <div>
-              <dt className="sr-only">Certificación</dt>
-              <dd>
-                <strong className="cifra block text-[clamp(24px,3.2vw,34px)] tracking-[-0.02em] text-hoja-luz">
-                  BPM
-                </strong>
-                <span className="mt-1 block font-mono text-[10.5px] tracking-[0.12em] text-[#7e8d7c] uppercase">
-                  Certificación Digemid
-                </span>
-              </dd>
-            </div>
-          </dl>
         </div>
       </section>
 
-      {/* ---------------------------------------- cinta de lo que fabricamos */}
-      <Cinta />
+      <PlacaAncha clave="microbiologia" prioridad />
 
-      {/* ------------------------------------------------------ servicios */}
-      <Band tono="blanco">
-        <BandHead
-          eyebrow="Tres formas de trabajar con nosotros"
-          titulo="Un laboratorio, tres maneras de llegar al mercado"
-          texto="Atendemos a empresas que quieren fabricar, a emprendedores que quieren crear una marca, y a distribuidores que quieren vender las nuestras."
-        />
-        <Grid cols={3}>
-          {SERVICIOS.map((s) => (
-            <article
-              key={s.titulo}
-              className="card card-viva relative overflow-hidden bg-hueso pt-6.5"
-            >
-              <span
-                aria-hidden="true"
-                className="absolute inset-x-0 top-0 h-[3px]"
-                style={{
-                  background:
-                    "linear-gradient(100deg,#4fa62f 0%,#8cc63f 42%,#ebda01 100%)",
-                }}
-              />
-              <div className="card-n">{s.n}</div>
-              <h3>{s.titulo}</h3>
-              <p>{s.texto}</p>
-              <div className="card-pie">
-                <Link href={s.href}>{s.enlace}</Link>
-              </div>
-            </article>
-          ))}
-        </Grid>
-      </Band>
+      {/* ======================================================= servicios */}
+      <Seccion>
+        <Clausula n="01" titulo="Servicios" />
+        <h2 className="aparece titular-medio mb-10 max-w-[18ch] text-verde">
+          Un laboratorio, tres maneras de llegar al mercado
+        </h2>
+        <Indice entradas={SERVICIOS} />
+      </Seccion>
 
-      {/* --------------------------------------------------------- proceso */}
-      <Band tono="verde">
-        <BandHead
-          oscuro
-          eyebrow="Maquila 360°"
-          titulo="Cinco etapas, un solo interlocutor"
-          texto="No coordinamos proveedores: hacemos el trabajo. Formulación, asuntos regulatorios, producción y control de calidad son áreas propias dentro de la misma planta."
-        />
-        <Pasos oscuro />
-      </Band>
-
-      {/* ------------------------------------------------------- por qué */}
-      <Band tono="blanco">
-        <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-14">
-          <div className="revela">
-            <span className="eyebrow filete">Por qué Qory</span>
-            <h2 className="mt-3 text-[clamp(25px,3.6vw,36px)]">
-              Lo que no se puede tercerizar
-            </h2>
-            <p className="mt-4 text-acero">
-              En un sector donde muchos laboratorios subcontratan tramos del proceso,
-              nuestra ventaja es simple: lo hacemos adentro. Eso acorta plazos, protege
-              tu fórmula y nos hace responsables de principio a fin.
-            </p>
-            <ul className="check mt-5.5">
-              <li>
-                <strong>Área de Asuntos Regulatorios propia.</strong> Tu notificación
-                sanitaria no depende de un tercero.
-              </li>
-              <li>
-                <strong>Control de calidad físico-químico y microbiológico</strong> en
-                planta, con liberación de lote documentada.
-              </li>
-              <li>
-                <strong>I+D con activos peruanos</strong>: sacha inchi, maca, hierba
-                luisa, avena y bambú.
-              </li>
-              <li>
-                <strong>Escala flexible</strong>: producción por pedido y por stock,
-                para lotes pequeños y grandes.
-              </li>
-            </ul>
-          </div>
-          <Galeria
-            cols={2}
-            claves={["fisicoQuimico", "siembra", "envasado", "agua"]}
-          />
+      {/* ========================================================= proceso */}
+      <Seccion tono="nube">
+        <Clausula n="02" titulo="Proceso · Maquila 360°" />
+        <div className="mb-10 grid gap-6 lg:grid-cols-[1fr_1fr] lg:gap-20">
+          <h2 className="aparece titular-medio max-w-[16ch] text-verde">
+            Cinco etapas, ninguna tercerizada
+          </h2>
+          <p className="max-w-[48ch] self-end text-[15.5px] text-acero">
+            No coordinamos proveedores: hacemos el trabajo. Formulación, asuntos
+            regulatorios, producción y control de calidad son áreas propias dentro de
+            la misma planta.
+          </p>
         </div>
-      </Band>
-
-      {/* ----------------------------------------------------- categorías */}
-      <Band tono="nube">
-        <BandHead
-          eyebrow="Qué fabricamos"
-          titulo="Cuatro categorías, decenas de formatos"
-          texto="Si tu producto entra en alguna de estas categorías, podemos fabricarlo. Si no estás seguro, escríbenos con el concepto y lo evaluamos."
-        />
-        <Grid cols={4}>
-          {CATEGORIAS.map((c) => (
-            <article key={c.titulo} className="card card-viva">
-              <h3>{c.titulo}</h3>
-              <p>{c.texto}</p>
-            </article>
+        <ol className="indice">
+          {PASOS.map((p, i) => (
+            <li key={p.titulo}>
+              <span className="n">{String(i + 1).padStart(2, "0")}</span>
+              <span className="t">{p.titulo}</span>
+              <span className="d">{p.texto}</span>
+              <span className="meta">Etapa {i + 1} de 5</span>
+            </li>
           ))}
-        </Grid>
-        <p className="mt-5.5">
-          <Link
-            className="group inline-flex items-center gap-2 font-semibold text-hoja-txt"
-            href="/productos"
-          >
-            Ver el detalle de formatos y presentaciones
-            <span className="transition-transform duration-200 group-hover:translate-x-1">
-              →
-            </span>
+        </ol>
+      </Seccion>
+
+      {/* ===================================================== qué fabricamos */}
+      <Seccion>
+        <Clausula n="03" titulo="Qué fabricamos" />
+        <div className="mb-10 grid gap-6 lg:grid-cols-[1fr_1fr] lg:gap-20">
+          <h2 className="aparece titular-medio max-w-[16ch] text-verde">
+            Tres categorías, decenas de formatos
+          </h2>
+          <p className="max-w-[48ch] self-end text-[15.5px] text-acero">
+            Si tu producto entra en alguna de estas categorías, podemos fabricarlo. Si
+            no estás seguro, escríbenos con el concepto y lo evaluamos.
+          </p>
+        </div>
+        <Indice entradas={CATEGORIAS} />
+        <p className="mt-9">
+          <Link className="vinculo" href="/productos">
+            Ver formatos, presentaciones y activos
+            <span aria-hidden="true">→</span>
           </Link>
         </p>
-      </Band>
+      </Seccion>
 
-      {/* --------------------------------------------------------- marcas */}
-      <Band tono="blanco">
-        <div className="revela grid grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-14">
-          <Declara>Calidad de laboratorio a precio de todos los días.</Declara>
-          <div>
-            <span className="eyebrow filete">Marcas propias</span>
-            <h2 className="mt-3 text-[clamp(23px,3.2vw,32px)]">
-              Sabemos crear marcas porque creamos las nuestras
-            </h2>
-            <p className="mt-3.5 text-acero">
-              Daya y Activen nacieron en este mismo laboratorio: la fórmula, el
-              registro, el empaque y la salida al canal. Es la mejor prueba de lo que
-              podemos hacer con la tuya.
-            </p>
-            <p className="mt-4.5">
-              <Link
-                className="group inline-flex items-center gap-2 font-semibold text-hoja-txt"
-                href="/marcas"
-              >
-                Conocer nuestras marcas
-                <span className="transition-transform duration-200 group-hover:translate-x-1">
-                  →
-                </span>
-              </Link>
-            </p>
-          </div>
+      {/* ==================================================== declaración */}
+      <Seccion tono="tinta" compacta>
+        <div className="grid gap-10 lg:grid-cols-[1.25fr_1fr] lg:items-end lg:gap-20">
+          <Declaracion oscuro pie="Promesa al consumidor">
+            Calidad de laboratorio a precio de todos los días.
+          </Declaracion>
+          <p className="max-w-[44ch] text-[15.5px] text-[#b0b09c]">
+            Daya y Activen nacieron en este mismo laboratorio: la fórmula, el registro,
+            el empaque y la salida al canal. Es la mejor prueba de lo que podemos hacer
+            con tu marca.
+          </p>
         </div>
-      </Band>
+      </Seccion>
 
-      <Cta
+      {/* ========================================================== marcas */}
+      <Seccion>
+        <Clausula n="04" titulo="Marcas propias" />
+        <h2 className="aparece titular-medio mb-10 max-w-[18ch] text-verde">
+          Sabemos crear marcas porque creamos las nuestras
+        </h2>
+        <Indice entradas={MARCAS} />
+        <p className="mt-9">
+          <Link className="vinculo" href="/marcas">
+            Conocer el portafolio completo
+            <span aria-hidden="true">→</span>
+          </Link>
+        </p>
+      </Seccion>
+
+      {/* ========================================================= respaldo */}
+      <Seccion tono="nube">
+        <Clausula n="05" titulo="Respaldo" />
+        <div className="grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:gap-20">
+          <h2 className="aparece titular-medio max-w-[14ch] text-verde">
+            Lo que no se puede tercerizar
+          </h2>
+          <Specs
+            filas={[
+              ["Regulatorio", "Área de Asuntos Regulatorios propia. El expediente técnico y la notificación sanitaria no salen de la casa."],
+              ["Calidad", "Control físico-químico y microbiológico en planta, con liberación de lote documentada."],
+              ["I+D", "Formulación con activos peruanos: sacha inchi, maca, hierba luisa, avena y bambú."],
+              ["Escala", "Producción por pedido y por stock, para lotes de lanzamiento y para volumen."],
+              ["Ambiental", "Huella de carbono e hídrica medida conforme a ISO 14064-1 e ISO 14046."],
+            ]}
+          />
+        </div>
+      </Seccion>
+
+      <Cierre
         titulo="¿Tienes un producto en mente?"
         texto="Cuéntanos la categoría, el volumen estimado y el plazo. Te respondemos con una evaluación técnica y una cotización."
       />

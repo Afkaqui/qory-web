@@ -5,6 +5,8 @@ import { SiteFooter } from "@/components/site-footer";
 export default function SitioLayout({ children }: LayoutProps<"/">) {
   return (
     <>
+      {/* Progreso de lectura: puro CSS, guiado por el scroll de la página. */}
+      <div className="progreso" aria-hidden="true" />
       <SiteHeader />
       <main id="principal">{children}</main>
       <SiteFooter />

@@ -17,7 +17,6 @@ const CATEGORIAS = [
   "Tratamiento facial",
   "Cuidado capilar",
   "Cuidado corporal",
-  "Higiene doméstica",
   "Aún no está definido",
 ];
 
@@ -161,7 +160,7 @@ export function QuoteForm() {
       </div>
 
       <div>
-        <button className="btn btn-verde" type="submit">
+        <button className="accion accion-llena" type="submit">
           Enviar briefing
         </button>
         {enviado && (
