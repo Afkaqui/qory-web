@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Archivo, Fraunces, IBM_Plex_Mono } from "next/font/google";
+import { DatosEstructurados } from "@/components/datos-estructurados";
 import { EMPRESA } from "@/lib/empresa";
 import "./globals.css";
 import { cn } from "@/lib/utils";
@@ -41,6 +42,23 @@ export const metadata: Metadata = {
     // El canónico de cada página ya cumple esa función.
   },
   alternates: { canonical: "/" },
+  // Código de propiedad de Google Search Console. Se pega en Vercel como
+  // variable de entorno NEXT_PUBLIC_GOOGLE_VERIFICACION; si no existe, no
+  // se emite ninguna etiqueta.
+  verification: process.env.NEXT_PUBLIC_GOOGLE_VERIFICACION
+    ? { google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICACION }
+    : undefined,
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  formatDetection: { telephone: false },
 };
 
 export const viewport = {
@@ -59,6 +77,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       )}
     >
       <body className="flex min-h-full flex-col">
+        <DatosEstructurados />
         <a
           href="#principal"
           className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-100 focus:bg-verde focus:px-4 focus:py-2.5 focus:text-hueso"

@@ -32,8 +32,8 @@ export function SiteFooter() {
             <Image
               src="/img/logo-negativo.png"
               alt="Qory Laboratorios"
-              width={539}
-              height={132}
+              width={1400}
+              height={350}
               className="mb-5 h-11 w-auto"
             />
             <p className="max-w-[34ch] text-[14px] leading-relaxed">

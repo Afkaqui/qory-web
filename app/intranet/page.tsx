@@ -11,8 +11,8 @@ export default function Page() {
           <Image
             src="/img/logo-negativo.png"
             alt="Qory Laboratorios"
-            width={539}
-            height={132}
+            width={1400}
+            height={350}
             className="h-11 w-auto"
           />
         </Link>

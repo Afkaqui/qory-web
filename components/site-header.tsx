@@ -66,8 +66,8 @@ export function SiteHeader() {
             <Image
               src="/img/logo.png"
               alt="Qory Laboratorios"
-              width={539}
-              height={132}
+              width={1400}
+              height={350}
               priority
               className="h-10 w-auto sm:h-11"
             />
