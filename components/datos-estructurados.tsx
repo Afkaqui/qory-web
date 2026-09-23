@@ -20,7 +20,15 @@ export function DatosEstructurados() {
     alternateName: EMPRESA.firma,
     url: EMPRESA.sitio,
     logo: `${EMPRESA.sitio}/img/logo.png`,
-    image: `${EMPRESA.sitio}/opengraph-image.png`,
+    // `image` es lo que Google asocia a la ficha de la empresa. Se declara como
+    // ImageObject con dimensiones: una imagen sin tamaño declarado se descarta
+    // con más facilidad al elegir la miniatura del resultado.
+    image: {
+      "@type": "ImageObject",
+      url: `${EMPRESA.sitio}/opengraph-image.png`,
+      width: 1200,
+      height: 630,
+    },
     description:
       "Laboratorio peruano de desarrollo, fabricación y acondicionado de productos cosméticos. Maquila bajo marca del cliente, desarrollo de marca privada y marcas propias.",
     foundingDate: String(EMPRESA.desde),

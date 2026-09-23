@@ -96,7 +96,7 @@ export default function Page() {
                   ["Actividad", "Desarrollo, fabricación, envasado y acondicionado de productos cosméticos"],
                   ["Buenas prácticas", "Manufactura y almacenamiento bajo lineamientos BPM. Certificación en gestión ante Digemid"],
                   ["Planta", "San Juan de Lurigancho, Lima. Producción, I+D, control de calidad, asuntos regulatorios y almacenes"],
-                  ["Alcance", "Lima · Arequipa · La Libertad · Chiclayo · Trujillo · La Merced"],
+                  ["Alcance", "Lima · Arequipa · Cusco · La Libertad · Chiclayo · Trujillo · La Merced"],
                   ["Marcas propias", "Seis, registradas en la clase 03"],
                 ]}
               />

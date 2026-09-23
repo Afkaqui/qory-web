@@ -597,11 +597,33 @@
   .indice > li:last-child {
     border-bottom: 1px solid var(--color-linea);
   }
+  /* A partir de 900 px el índice se lee como una tabla, y para eso las cuatro
+     columnas tienen que coincidir entre filas. Antes cada <li> era su propia
+     retícula: la última columna se ajustaba al texto de SU fila («I+D» frente a
+     «Producción»), y al repartirse el resto del ancho se desplazaban también
+     las dos del medio. Ahora la retícula vive en el <ol> y cada fila la hereda
+     con `subgrid`, así que una sola medida manda sobre todas. */
   @media (min-width: 900px) {
-    .indice > li {
+    .indice {
+      display: grid;
       grid-template-columns: 46px minmax(0, 0.9fr) minmax(0, 1.2fr) auto;
+    }
+    .indice > li {
+      grid-column: 1 / -1;
+      grid-template-columns: subgrid;
       gap: 0 32px;
       align-items: start;
+    }
+
+    /* Sin soporte de subgrid, una última columna de ancho fijo consigue la
+       misma alineación, a costa de no adaptarse al contenido. */
+    @supports not (grid-template-columns: subgrid) {
+      .indice {
+        display: block;
+      }
+      .indice > li {
+        grid-template-columns: 46px minmax(0, 0.9fr) minmax(0, 1.2fr) 132px;
+      }
     }
   }
   .indice .n {

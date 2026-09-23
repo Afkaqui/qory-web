@@ -108,10 +108,10 @@ export default function Page() {
       <Seccion tono="tinta" compacta>
         <div className="grid gap-10 lg:grid-cols-[1.25fr_1fr] lg:items-end lg:gap-20">
           <Declaracion oscuro pie="Presencia comercial">
-            Seis regiones, una sola planta.
+            Una planta, siete destinos.
           </Declaracion>
           <p className="max-w-[44ch] text-[15.5px] text-[#b0b09c]">
-            Lima, Arequipa, La Libertad, Chiclayo, Trujillo y La Merced. Atendemos
+            Lima, Arequipa, Cusco, La Libertad, Chiclayo, Trujillo y La Merced. Atendemos
             cadenas de farmacias, importadoras, salones de belleza profesionales y
             venta directa.
           </p>

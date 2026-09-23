@@ -4,7 +4,7 @@ import { Cierre, Clausula, Declaracion, Portadilla, Seccion, Specs } from "@/com
 export const metadata: Metadata = {
   title: "Nuestras marcas",
   description:
-    "Daya, Activen, Kibo, Kuyaway, Eco Forest y Frotasol: marcas registradas ante INDECOPI en la clase 03, desarrolladas y fabricadas en nuestro laboratorio.",
+    "Daya, Activen, Kibo, Kuyaway y Eco Forest: marcas registradas ante INDECOPI en la clase 03, desarrolladas y fabricadas en nuestro laboratorio.",
   alternates: { canonical: "/marcas" },
 };
 
@@ -41,7 +41,6 @@ const PORTAFOLIO: [string, string][] = [
   ["Kuyaway", "Cuidado personal e higiene"],
   ["Kibo", "Marca registrada del portafolio"],
   ["Eco Forest", "Cosméticos y preparaciones de tocador"],
-  ["Frotasol", "Cosméticos y preparaciones de tocador"],
 ];
 
 export default function Page() {
@@ -50,11 +49,11 @@ export default function Page() {
       <Portadilla
         codigo="Ficha 05 · Marcas propias"
         titulo="Marcas que nacieron en este laboratorio"
-        lede="Seis marcas registradas ante INDECOPI en la clase 03. Son la prueba de que sabemos llevar un producto desde la fórmula hasta el punto de venta."
+        lede="Cinco marcas registradas ante INDECOPI en la clase 03. Son la prueba de que sabemos llevar un producto desde la fórmula hasta el punto de venta."
         ficha={[
           ["Registro", "INDECOPI · Dirección de Signos Distintivos"],
           ["Clase", "03 de la Clasificación Internacional"],
-          ["Marcas", "Daya · Activen · Kibo · Kuyaway · Eco Forest · Frotasol"],
+          ["Marcas", "Daya · Activen · Kibo · Kuyaway · Eco Forest"],
           ["Desarrollo", "Fórmula, empaque, registro sanitario y producción, todo interno"],
         ]}
       />
@@ -78,7 +77,7 @@ export default function Page() {
         <Clausula n="03" titulo="Portafolio registrado" />
         <div className="mb-10 grid gap-6 lg:grid-cols-[1fr_1fr] lg:gap-20">
           <h2 className="aparece titular-medio max-w-[13ch] text-verde">
-            Las seis, en la clase 03
+            Las cinco, en la clase 03
           </h2>
           <p className="max-w-[48ch] self-end text-[15.5px] text-acero">
             Productos cosméticos, preparaciones de tocador y perfumería.
