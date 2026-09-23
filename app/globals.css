@@ -589,10 +589,23 @@
   }
   .indice > li {
     display: grid;
-    grid-template-columns: 46px minmax(0, 1fr);
-    gap: 0 18px;
-    padding-block: 22px;
+    grid-template-columns: 38px minmax(0, 1fr);
+    gap: 0 14px;
+    padding-block: 20px;
     border-top: 1px solid var(--color-linea);
+  }
+  /* En móvil la fila tiene dos columnas pero CUATRO hijos. Sin colocarlos
+     explícitamente, el tercero (la descripción) cae en la columna estrecha
+     del número y el texto se parte palabra por palabra. Número a la
+     izquierda; título, descripción y etiqueta apilados a la derecha. */
+  .indice .n {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .indice .t,
+  .indice .d,
+  .indice .meta {
+    grid-column: 2;
   }
   .indice > li:last-child {
     border-bottom: 1px solid var(--color-linea);
@@ -613,6 +626,13 @@
       grid-template-columns: subgrid;
       gap: 0 32px;
       align-items: start;
+    }
+    .indice .n,
+    .indice .t,
+    .indice .d,
+    .indice .meta {
+      grid-column: auto;
+      grid-row: auto;
     }
 
     /* Sin soporte de subgrid, una última columna de ancho fijo consigue la
@@ -656,7 +676,13 @@
     text-transform: uppercase;
     color: var(--color-acero-claro);
     white-space: nowrap;
-    padding-top: 5px;
+    margin-top: 10px;
+  }
+  @media (min-width: 900px) {
+    .indice .meta {
+      margin-top: 0;
+      padding-top: 5px;
+    }
   }
 
   /* ---------- dato suelto en monoespaciada ---------- */
