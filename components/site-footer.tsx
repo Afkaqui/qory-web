@@ -102,9 +102,7 @@ export function SiteFooter() {
         </div>
 
         <div className="mt-12 flex flex-wrap items-baseline justify-between gap-x-8 gap-y-3 border-t border-[#43442c] pt-6">
-          <span className="dato text-[#75765f]">
-            {EMPRESA.razon} · RUC {EMPRESA.ruc}
-          </span>
+          <span className="dato text-[#75765f]">{EMPRESA.razon}</span>
           <span className="flex flex-wrap gap-x-2.5 text-[13px]">
             <Link className="text-[#c9cab8] hover:text-white" href="/legal/privacidad">
               Política de privacidad

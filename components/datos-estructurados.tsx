@@ -24,7 +24,6 @@ export function DatosEstructurados() {
     description:
       "Laboratorio peruano de desarrollo, fabricación y acondicionado de productos cosméticos. Maquila bajo marca del cliente, desarrollo de marca privada y marcas propias.",
     foundingDate: String(EMPRESA.desde),
-    taxID: EMPRESA.ruc,
     email: EMPRESA.correo,
     telephone: `+51${EMPRESA.telefonos[0].numero.replace(/\s/g, "")}`,
     address: {

@@ -50,9 +50,8 @@ export default function Page() {
         lede="Qory Laboratorios empezó en 2017 haciendo maquila y desarrollo de fórmulas para terceros. Hoy fabrica para empresas de todo el país y tiene marcas propias en farmacias, importadoras y salones."
         ficha={[
           ["Razón social", EMPRESA.razon],
-          ["RUC", EMPRESA.ruc],
           ["Inicio de actividades", "26 de enero de 2017"],
-          ["Actividad", "Fabricación de jabones, detergentes, perfumes y preparados de tocador · CIIU 2023"],
+          ["Actividad", "Desarrollo, fabricación, envasado y acondicionado de productos cosméticos"],
           ["Domicilio", `${EMPRESA.direccion}, ${EMPRESA.distrito}`],
         ]}
       />

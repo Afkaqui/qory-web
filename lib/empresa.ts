@@ -7,6 +7,9 @@
 export const EMPRESA = {
   razon: "Qory Laboratorios S.A.C.",
   firma: "Qory Lab",
+  // Solo se usa en /legal/privacidad y /legal/reclamaciones, donde identificar
+  // al proveedor y al responsable del tratamiento de datos es obligatorio.
+  // Fuera de esas dos páginas no debe aparecer.
   ruc: "20601831601",
   desde: 2017,
   direccion: "APV. Inca Manco Cápac 2.ª etapa, Calle 4, Mz. F, Lt. 4–5",

@@ -68,7 +68,7 @@ export default function Page() {
           <div className="regla-firme alza flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2 pt-3">
             <span className="rotulo rotulo-verde">Laboratorio cosmético · Lima, Perú</span>
             <span className="dato">
-              RUC {EMPRESA.ruc} · CIIU 2023 · Desde {EMPRESA.desde}
+              Maquila · Marca privada · Marcas propias · Desde {EMPRESA.desde}
             </span>
           </div>
 

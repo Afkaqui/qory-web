@@ -4,55 +4,102 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import {
+  Candado,
+  Correo,
+  Facebook,
+  Instagram,
+  LinkedIn,
+  Reloj,
+  Telefono,
+  Ubicacion,
+  Whatsapp,
+} from "@/components/iconos";
 import { EMPRESA, MENU } from "@/lib/empresa";
-
-function Candado() {
-  return (
-    <svg
-      viewBox="0 0 16 16"
-      width="12"
-      height="12"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.7"
-      aria-hidden="true"
-    >
-      <rect x="3" y="7" width="10" height="7" />
-      <path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2" />
-    </svg>
-  );
-}
 
 export function SiteHeader() {
   const pathname = usePathname();
   const [abierto, setAbierto] = useState(false);
   const [rutaPrevia, setRutaPrevia] = useState(pathname);
   const ventas = EMPRESA.telefonos[0];
+  const tel = ventas.numero.replace(/\s/g, "");
 
   if (rutaPrevia !== pathname) {
     setRutaPrevia(pathname);
     setAbierto(false);
   }
 
+  const enlaceServicio =
+    "inline-flex items-center gap-1.5 whitespace-nowrap transition-colors hover:text-hoja-txt";
+
   return (
     <header className="sticky top-[env(safe-area-inset-top,0px)] z-50 border-b border-linea bg-hueso">
-      {/* Renglón de servicio: teléfono comercial y acceso interno. */}
+      {/* Renglón de servicio: lo que alguien busca sin tener que entrar a Contacto. */}
       <div className="hidden border-b border-linea lg:block">
-        <div className="hoja flex min-h-[34px] items-center gap-6">
-          <span className="rotulo">
-            {EMPRESA.razon} · RUC {EMPRESA.ruc}
+        <div className="hoja flex min-h-[36px] items-center gap-5 text-[12px] text-acero">
+          <span className={`${enlaceServicio} text-acero-claro`}>
+            <Ubicacion />
+            San Juan de Lurigancho, Lima
           </span>
-          <div className="ml-auto flex items-center gap-6">
-            <a
-              className="dato transition-colors hover:text-hoja-txt"
-              href={`tel:+51${ventas.numero.replace(/\s/g, "")}`}
-            >
+          <span className={`${enlaceServicio} hidden text-acero-claro xl:inline-flex`}>
+            <Reloj />
+            Lun a vie · 8:00 – 17:30
+          </span>
+
+          <div className="ml-auto flex items-center gap-5">
+            <a className={enlaceServicio} href={`tel:+51${tel}`}>
+              <Telefono />
               Ventas {ventas.numero}
             </a>
-            <Link
-              href="/intranet"
-              className="dato inline-flex items-center gap-1.5 transition-colors hover:text-hoja-txt"
+            <a
+              className={`${enlaceServicio} hidden xl:inline-flex`}
+              href={`https://wa.me/51${tel}`}
+              rel="noopener"
+              target="_blank"
             >
+              <Whatsapp />
+              WhatsApp
+            </a>
+            <a className={`${enlaceServicio} hidden xl:inline-flex`} href={`mailto:${EMPRESA.correo}`}>
+              <Correo />
+              {EMPRESA.correo}
+            </a>
+
+            <span aria-hidden="true" className="h-3.5 w-px bg-linea" />
+
+            <nav aria-label="Redes sociales" className="flex items-center gap-3">
+              <a
+                className="text-acero-claro transition-colors hover:text-hoja-txt"
+                href={EMPRESA.redes.linkedin}
+                rel="noopener"
+                target="_blank"
+              >
+                <LinkedIn size={15} />
+                <span className="sr-only">LinkedIn de Qory Laboratorios</span>
+              </a>
+              <a
+                className="text-acero-claro transition-colors hover:text-hoja-txt"
+                href={EMPRESA.redes.facebook}
+                rel="noopener"
+                target="_blank"
+              >
+                <Facebook size={15} />
+                <span className="sr-only">Facebook de Qory Laboratorios</span>
+              </a>
+              <a
+                className="text-acero-claro transition-colors hover:text-hoja-txt"
+                href={EMPRESA.redes.instagram}
+                rel="noopener"
+                target="_blank"
+              >
+                <Instagram size={15} />
+                <span className="sr-only">Instagram de Qory Laboratorios</span>
+              </a>
+            </nav>
+
+            <span aria-hidden="true" className="h-3.5 w-px bg-linea" />
+
+            <Link href="/intranet" className={enlaceServicio}>
               <Candado />
               Intranet
             </Link>
@@ -113,11 +160,48 @@ export function SiteHeader() {
                   Cotizar
                 </Link>
               </li>
-              <li className="mt-3 lg:hidden">
-                <Link
-                  href="/intranet"
-                  className="accion flex items-center justify-center gap-2"
+
+              {/* En móvil el renglón de servicio se despliega dentro del menú */}
+              <li className="mt-5 grid gap-3 border-t border-linea pt-5 text-[14px] text-acero lg:hidden">
+                <a className="inline-flex items-center gap-2.5" href={`tel:+51${tel}`}>
+                  <Telefono size={15} />
+                  Ventas {ventas.numero}
+                </a>
+                <a
+                  className="inline-flex items-center gap-2.5"
+                  href={`https://wa.me/51${tel}`}
+                  rel="noopener"
+                  target="_blank"
                 >
+                  <Whatsapp size={15} />
+                  WhatsApp
+                </a>
+                <a className="inline-flex items-center gap-2.5" href={`mailto:${EMPRESA.correo}`}>
+                  <Correo size={15} />
+                  {EMPRESA.correo}
+                </a>
+                <span className="inline-flex items-center gap-2.5 text-acero-claro">
+                  <Reloj size={15} />
+                  Lun a vie · 8:00 – 17:30
+                </span>
+                <div className="flex items-center gap-4 pt-1">
+                  <a className="text-acero-claro" href={EMPRESA.redes.linkedin} rel="noopener" target="_blank">
+                    <LinkedIn size={17} />
+                    <span className="sr-only">LinkedIn</span>
+                  </a>
+                  <a className="text-acero-claro" href={EMPRESA.redes.facebook} rel="noopener" target="_blank">
+                    <Facebook size={17} />
+                    <span className="sr-only">Facebook</span>
+                  </a>
+                  <a className="text-acero-claro" href={EMPRESA.redes.instagram} rel="noopener" target="_blank">
+                    <Instagram size={17} />
+                    <span className="sr-only">Instagram</span>
+                  </a>
+                </div>
+              </li>
+
+              <li className="mt-4 lg:hidden">
+                <Link href="/intranet" className="accion flex items-center justify-center gap-2">
                   <Candado />
                   Intranet
                 </Link>

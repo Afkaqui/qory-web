@@ -66,9 +66,7 @@ export function Portadilla({
       <div className="hoja">
         <div className="regla-firme alza flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2 pt-3">
           <span className="rotulo rotulo-verde">{codigo}</span>
-          <span className="dato">
-            {EMPRESA.razon} · RUC {EMPRESA.ruc}
-          </span>
+          <span className="dato">{EMPRESA.razon}</span>
         </div>
 
         <h1 className="titular alza alza-1 mt-8 max-w-[15ch] text-verde">{titulo}</h1>
