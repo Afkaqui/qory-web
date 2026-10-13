@@ -23,10 +23,13 @@ export const EMPRESA = {
     { numero: "936 516 958", rol: "Gerencia General" },
   ],
   horario: ["Lunes a viernes, de 8:00 a 17:30"],
-  // El sitio vive en el subdominio: el dominio raíz sigue en el hosting
-  // anterior. De aquí salen metadataBase, Open Graph, sitemap y canónicos,
-  // así que al mover el sitio al dominio raíz basta con cambiar esta línea.
-  sitio: "https://web.qorylab.com",
+  // Dirección principal del sitio. En Vercel `qorylab.pe` redirige (308) a
+  // `www.qorylab.pe`, así que el canónico tiene que ser la variante con www:
+  // un canónico que apunta a una URL que redirige confunde a Google.
+  // De aquí salen metadataBase, sitemap, robots, imagen para compartir y
+  // datos estructurados. `web.qorylab.com` también redirige aquí, de forma
+  // temporal, hasta que venza ese dominio.
+  sitio: "https://www.qorylab.pe",
   redes: {
     linkedin: "https://www.linkedin.com/company/qory-laboratorios-sac/",
     facebook: "https://www.facebook.com/qorylaboratorio/",
