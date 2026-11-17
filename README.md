@@ -116,7 +116,7 @@ La certificación **BPM de Digemid** sí es real y se comunica como tal.
 
 | Pendiente | Detalle |
 | --- | --- |
-| **Correo corporativo** | `lib/empresa.ts` usa `ventas01@qorylab.com`, que vive en el hosting anterior y desaparece cuando venza `qorylab.com`. El correo ya corre en Microsoft 365 sobre `qorylab.pe`: **falta confirmar la dirección nueva** y cambiarla en `lib/empresa.ts` (de ahí salen cabecera, pie, formulario, datos estructurados y páginas legales). |
+| **Correo corporativo** | `ventas01@qorylab.pe` (Microsoft 365, confirmado por la empresa). Vive en un solo lugar, `lib/empresa.ts`, y de ahí salen cabecera, pie, formulario de cotización, datos estructurados y páginas legales. |
 | **Formulario real** | `quote-form.tsx` compone un `mailto:`. Reemplazar por una Route Handler en `app/api/cotizar/route.ts` con envío SMTP, o un servicio externo, para no depender del cliente de correo del visitante y registrar los leads. |
 | **Libro de Reclamaciones** | Falta el formulario con numeración correlativa y respuesta en 15 días hábiles (Ley 29571). |
 | **Política de privacidad** | Borrador. Debe aprobarlo Asesoría Legal e inscribirse el banco de datos ante la ANPD. |

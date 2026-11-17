@@ -17,7 +17,7 @@ export const EMPRESA = {
   referencia: "Av. Los Claveles, frente a la fábrica Celima",
   // Buzón de área, no personal: sobrevive a cambios de puesto y no expone
   // el nombre de nadie en una página pública.
-  correo: "ventas01@qorylab.com",
+  correo: "ventas01@qorylab.pe",
   telefonos: [
     { numero: "936 518 211", rol: "Central · Administración" },
     { numero: "936 516 958", rol: "Gerencia General" },
