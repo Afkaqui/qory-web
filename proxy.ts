@@ -7,6 +7,13 @@ import { NextResponse, type NextRequest } from "next/server";
  */
 export function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
+  // En el servidor del backend (api.qorylab.pe) solo existe /api: la interfaz vive en la web.
+  if (process.env.MODO === "api") {
+    return pathname.startsWith("/api/") ? NextResponse.next() : new NextResponse("Not found", { status: 404 });
+  }
+  // En la web pública el backend no existe: /api responde solo en el servidor propio.
+  if (pathname.startsWith("/api/")) return new NextResponse("Not found", { status: 404 });
+  if (!pathname.startsWith("/intranet")) return NextResponse.next();
   const libre = pathname === "/intranet" || pathname.startsWith("/intranet/activar");
   if (!libre && !req.cookies.get("qory_sesion")) {
     return NextResponse.redirect(new URL("/intranet", req.url));
@@ -14,4 +21,4 @@ export function proxy(req: NextRequest) {
   return NextResponse.next();
 }
 
-export const config = { matcher: "/intranet/:path*" };
+export const config = { matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"] };

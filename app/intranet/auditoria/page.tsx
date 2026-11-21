@@ -1,17 +1,13 @@
-import { exigir } from "@/lib/auth/sesion";
+import { exigir, tokenActual } from "@/lib/auth/sesion";
 import { Caja, Marco } from "@/components/intranet/marco";
-import { pool } from "@/lib/db";
+import { api } from "@/lib/api";
 
 export default async function Page() {
   await exigir("administrador");
-  const { rows } = await pool.query<{
-    id: string;
-    cuando: Date;
-    actor: string;
-    accion: string;
-    objetivo: string | null;
-    detalle: string | null;
-  }>("SELECT id, cuando, actor, accion, objetivo, detalle FROM auditoria ORDER BY id DESC LIMIT 200");
+  const r = await api<{
+    registros: { id: number; cuando: string; actor: string; accion: string; objetivo: string | null; detalle: string | null }[];
+  }>("/api/auditoria", { token: await tokenActual() });
+  const rows = r.ok ? r.datos.registros : [];
   return (
     <Marco
       titulo="Auditoría"
@@ -34,7 +30,7 @@ export default async function Page() {
                 {rows.map((a) => (
                   <tr key={a.id}>
                     <td className="font-mono whitespace-nowrap text-acero-claro">
-                      {a.cuando.toLocaleString("es-PE", { dateStyle: "short", timeStyle: "short", timeZone: "America/Lima" })}
+                      {new Date(a.cuando).toLocaleString("es-PE", { dateStyle: "short", timeStyle: "short", timeZone: "America/Lima" })}
                     </td>
                     <td className="whitespace-nowrap">{a.actor}</td>
                     <td className="font-medium">{a.accion.replaceAll("_", " ")}</td>

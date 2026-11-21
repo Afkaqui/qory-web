@@ -28,7 +28,7 @@ try {
     [email.toLowerCase(), `rol ${rol} (por script)`],
   );
   console.log(`Usuario creado: ${nombre} <${email}> · ${rol}`);
-  console.log(`Enlace de activación (72 h, un solo uso):\n${process.env.APP_URL ?? ""}/intranet/activar/${token}`);
+  console.log(`Enlace de activación (72 h, un solo uso):\n${process.env.WEB_URL ?? "https://www.qorylab.pe"}/intranet/activar/${token}`);
 } finally {
   await cliente.end();
 }
