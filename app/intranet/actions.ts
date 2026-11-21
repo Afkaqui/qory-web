@@ -83,3 +83,75 @@ export async function cambiarEstado(form: FormData) {
   });
   revalidatePath("/intranet/usuarios");
 }
+
+/* ------------------------------------------------------------ tablero */
+
+async function llamar(ruta: string, cuerpo: Record<string, unknown>, revalidar: string[], ok: string): Promise<Estado> {
+  const r = await api(ruta, { metodo: "POST", token: await tokenActual(), cuerpo });
+  if (!r.ok) return { error: r.error };
+  for (const p of revalidar) revalidatePath(p);
+  return { ok };
+}
+
+export async function guardarCaptura(_prev: Estado, form: FormData): Promise<Estado> {
+  await exigir("jefe");
+  return llamar(
+    "/api/captura",
+    {
+      periodo: texto(form, "periodo"),
+      codigo: texto(form, "codigo"),
+      valor: texto(form, "valor"),
+      denominador: texto(form, "denominador"),
+      meta: texto(form, "meta"),
+      referencia: texto(form, "referencia"),
+    },
+    ["/intranet/captura", "/intranet/panel"],
+    "Guardado.",
+  );
+}
+
+export async function guardarCajaSemana(_prev: Estado, form: FormData): Promise<Estado> {
+  await exigir("jefe");
+  return llamar(
+    "/api/caja",
+    {
+      periodo: texto(form, "periodo"),
+      semana: Number(texto(form, "semana")),
+      cajaInicial: texto(form, "cajaInicial"),
+      cobros: texto(form, "cobros"),
+      pagos: texto(form, "pagos"),
+      evidencia: texto(form, "evidencia"),
+    },
+    ["/intranet/caja", "/intranet/panel"],
+    "Guardado.",
+  );
+}
+
+export async function fijarCorte(_prev: Estado, form: FormData): Promise<Estado> {
+  await exigir("administrador");
+  return llamar(
+    "/api/corte",
+    { periodo: texto(form, "periodo"), corte: texto(form, "corte") },
+    ["/intranet/panel", "/intranet/caja", "/intranet/acciones"],
+    "Corte guardado.",
+  );
+}
+
+export async function guardarAccion(_prev: Estado, form: FormData): Promise<Estado> {
+  await exigir("jefe");
+  const id = texto(form, "id");
+  return llamar(
+    id ? `/api/acciones/${encodeURIComponent(id)}` : "/api/acciones",
+    {
+      codigo: texto(form, "codigo"),
+      brecha: texto(form, "brecha"),
+      accion: texto(form, "accion"),
+      responsable: texto(form, "responsable"),
+      fechaLimite: texto(form, "fechaLimite"),
+      estado: texto(form, "estado"),
+      evidencia: texto(form, "evidencia"),
+    },
+    ["/intranet/acciones", "/intranet/panel"],
+    id ? "Guardado." : "Acción registrada.",
+  );
+}

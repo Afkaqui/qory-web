@@ -42,3 +42,6 @@ next-env.d.ts
 
 # local
 .env
+
+# datos privados del modelo (no van al repositorio público)
+/db/privado/
