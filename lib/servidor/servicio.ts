@@ -155,7 +155,7 @@ export async function activar(token: string, clave: string, repetida: string) {
 
 export async function listarUsuarios(actor: Usuario) {
   const { rows } = await pool.query(
-    `SELECT id, nombre, email, rol, area, activo, (clave_hash IS NOT NULL) AS con_clave, ultimo_ingreso
+    `SELECT id, nombre, email, rol, area, celular, activo, (clave_hash IS NOT NULL) AS con_clave, ultimo_ingreso
        FROM usuarios
       ORDER BY CASE rol WHEN 'superadmin' THEN 0 WHEN 'administrador' THEN 1 WHEN 'jefe' THEN 2 ELSE 3 END, nombre`,
   );
@@ -169,21 +169,23 @@ export async function listarUsuarios(actor: Usuario) {
   };
 }
 
-export async function crearUsuario(actor: Usuario, datos: { email: string; nombre: string; rol: string; area?: string }) {
+export async function crearUsuario(actor: Usuario, datos: { email: string; nombre: string; rol: string; area?: string; celular?: string }) {
   const email = (datos.email ?? "").trim().toLowerCase();
   const nombre = (datos.nombre ?? "").trim();
   const rol = datos.rol as Rol;
   const area = (datos.area ?? "").trim() || null;
+  const celular = (datos.celular ?? "").replace(/[\s-]/g, "") || null;
 
   if (!EMAIL.test(email)) return falla("Escribe un correo válido.");
   if (nombre.length < 3) return falla("Escribe el nombre completo.");
+  if (celular && !/^9\d{8}$/.test(celular)) return falla("El celular debe tener 9 dígitos y empezar con 9.");
   if (!rolesAsignables(actor.rol).includes(rol)) return falla("No tienes permiso para crear ese rol.", 403);
 
   let id: string;
   try {
     const { rows } = await pool.query(
-      "INSERT INTO usuarios (email, nombre, rol, area, creado_por) VALUES ($1,$2,$3,$4,$5) RETURNING id",
-      [email, nombre, rol, area, actor.id],
+      "INSERT INTO usuarios (email, nombre, rol, area, celular, creado_por) VALUES ($1,$2,$3,$4,$5,$6) RETURNING id",
+      [email, nombre, rol, area, celular, actor.id],
     );
     id = rows[0].id;
   } catch (e) {

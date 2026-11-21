@@ -4,7 +4,7 @@
 import { createHash, randomBytes } from "node:crypto";
 import pg from "pg";
 
-const [email, nombre, rol, area] = process.argv.slice(2);
+const [email, nombre, rol, area, celular] = process.argv.slice(2);
 const ROLES = ["superadmin", "administrador", "jefe", "operario"];
 if (!email || !nombre || !ROLES.includes(rol)) {
   console.error('Uso: crear-usuario.mjs <correo> "<Nombre>" <superadmin|administrador|jefe|operario> [area]');
@@ -15,8 +15,8 @@ const cliente = new pg.Client({ connectionString: process.env.DATABASE_URL });
 await cliente.connect();
 try {
   const { rows } = await cliente.query(
-    "INSERT INTO usuarios (email, nombre, rol, area) VALUES ($1,$2,$3,$4) RETURNING id",
-    [email.toLowerCase(), nombre, rol, area ?? null],
+    "INSERT INTO usuarios (email, nombre, rol, area, celular) VALUES ($1,$2,$3,$4,$5) RETURNING id",
+    [email.toLowerCase(), nombre, rol, area ?? null, celular ?? null],
   );
   const token = randomBytes(32).toString("base64url");
   await cliente.query(

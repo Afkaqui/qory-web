@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS usuarios (
   nombre          text NOT NULL,
   rol             text NOT NULL CHECK (rol IN ('superadmin','administrador','jefe','operario')),
   area            text,
+  celular         text,
   activo          boolean NOT NULL DEFAULT true,
   clave_hash      text,
   intentos        integer NOT NULL DEFAULT 0,
@@ -14,6 +15,7 @@ CREATE TABLE IF NOT EXISTS usuarios (
   creado_en       timestamptz NOT NULL DEFAULT now(),
   ultimo_ingreso  timestamptz
 );
+ALTER TABLE usuarios ADD COLUMN IF NOT EXISTS celular text;
 CREATE UNIQUE INDEX IF NOT EXISTS usuarios_email_unico ON usuarios (lower(email));
 
 CREATE TABLE IF NOT EXISTS sesiones (

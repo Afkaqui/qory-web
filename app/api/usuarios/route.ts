@@ -10,13 +10,14 @@ export async function GET(req: Request) {
 export async function POST(req: Request) {
   const a = await autenticar(req, "administrador");
   if ("respuesta" in a) return a.respuesta;
-  const d = await cuerpo<{ email: string; nombre: string; rol: string; area: string }>(req);
+  const d = await cuerpo<{ email: string; nombre: string; rol: string; area: string; celular: string }>(req);
   return responder(
     await crearUsuario(a.usuario, {
       email: String(d.email ?? ""),
       nombre: String(d.nombre ?? ""),
       rol: String(d.rol ?? ""),
       area: String(d.area ?? ""),
+      celular: String(d.celular ?? ""),
     }),
   );
 }

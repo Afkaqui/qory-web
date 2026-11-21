@@ -20,6 +20,7 @@ export default async function Page() {
       email: string;
       rol: Rol;
       area: string | null;
+      celular: string | null;
       activo: boolean;
       con_clave: boolean;
       ultimo_ingreso: string | null;
@@ -62,6 +63,7 @@ export default async function Page() {
                       <td>
                         <div className="font-medium">{u.nombre}</div>
                         <div className="font-mono text-[11.5px] text-acero-claro">{u.email}</div>
+                        {u.celular && <div className="font-mono text-[11.5px] text-acero-claro">{u.celular.replace(/(\d{3})(\d{3})(\d{3})/, "$1 $2 $3")}</div>}
                       </td>
                       <td>
                         <Chip tono={ROL_TONO[u.rol]}>{NOMBRE_ROL[u.rol]}</Chip>

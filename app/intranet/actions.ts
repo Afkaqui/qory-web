@@ -54,6 +54,7 @@ export async function crearUsuario(_prev: Estado, form: FormData): Promise<Estad
       nombre: texto(form, "nombre"),
       rol: texto(form, "rol"),
       area: texto(form, "area"),
+      celular: texto(form, "celular"),
     },
   });
   if (!r.ok) return { error: r.error };

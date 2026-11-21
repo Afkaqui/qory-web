@@ -107,6 +107,11 @@ export function FormNuevoUsuario({ roles }: { roles: Rol[] }) {
           <input id="area" name="area" type="text" placeholder="Producción" />
         </div>
       </div>
+      <div className="campo">
+        <label htmlFor="celular">Celular</label>
+        <input id="celular" name="celular" type="tel" inputMode="numeric" placeholder="9XX XXX XXX" autoComplete="off" />
+        <span className="ayuda">Opcional. 9 dígitos.</span>
+      </div>
       <Aviso estado={estado} />
       <EnlaceEmitido estado={estado} />
       <button type="submit" className="btn btn-verde" disabled={pendiente}>
