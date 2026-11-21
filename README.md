@@ -155,3 +155,22 @@ con sesión y contraseñas cifradas, base de datos relacional, acciones de servi
 que verifiquen rol en cada llamada, y una bitácora de auditoría que no se pueda
 modificar. La propuesta completa —roles, módulos, indicadores y fases— está en el
 documento de intranet que acompaña a este proyecto.
+
+### Indicadores de gerencia del tablero
+
+`/intranet/panel` muestra, solo al rol **Encargado**, los cinco indicadores que
+definió la empresa: ventas netas facturadas, entregas completas a tiempo,
+inventario sin movimiento mayor a 90 días, caja mínima a 13 semanas y cartera
+vencida. Cada uno trae su definición («cómo se mide» y «por qué importa») con
+el texto de la empresa, un estado escrito y un gráfico con su vista en tabla.
+
+- Datos y cálculos: `lib/intranet-gerencia.ts`. Los valores derivados (neto,
+  porcentajes, saldo de caja) se **calculan** desde las cifras base, así que el
+  tablero no se contradice.
+- Gráficos: `components/intranet/graficos.tsx`, SVG del lado del servidor, sin
+  librerías.
+- Visibilidad por rol: `SoloRol` en `components/intranet/marco.tsx`.
+
+**Todas las cifras y las metas son de ejemplo.** Y mientras la intranet no tenga
+autenticación real, **`/intranet` es una ruta pública** (solo lleva `noindex`):
+nunca se deben cargar ahí cifras reales de la empresa.

@@ -1,7 +1,17 @@
+import { exigir } from "@/lib/auth/sesion";
 import { Caja, Marco } from "@/components/intranet/marco";
-import { AUDITORIA } from "@/lib/intranet-demo";
+import { pool } from "@/lib/db";
 
-export default function Page() {
+export default async function Page() {
+  await exigir("administrador");
+  const { rows } = await pool.query<{
+    id: string;
+    cuando: Date;
+    actor: string;
+    accion: string;
+    objetivo: string | null;
+    detalle: string | null;
+  }>("SELECT id, cuando, actor, accion, objetivo, detalle FROM auditoria ORDER BY id DESC LIMIT 200");
   return (
     <Marco
       titulo="Auditoría"
@@ -21,15 +31,22 @@ export default function Page() {
                 </tr>
               </thead>
               <tbody>
-                {AUDITORIA.map((a) => (
-                  <tr key={`${a.fecha}-${a.accion}`}>
-                    <td className="font-mono whitespace-nowrap text-acero-claro">{a.fecha}</td>
-                    <td className="whitespace-nowrap">{a.usuario}</td>
-                    <td className="font-medium">{a.accion}</td>
-                    <td className="whitespace-nowrap">{a.entidad}</td>
-                    <td className="text-acero">{a.detalle}</td>
+                {rows.map((a) => (
+                  <tr key={a.id}>
+                    <td className="font-mono whitespace-nowrap text-acero-claro">
+                      {a.cuando.toLocaleString("es-PE", { dateStyle: "short", timeStyle: "short", timeZone: "America/Lima" })}
+                    </td>
+                    <td className="whitespace-nowrap">{a.actor}</td>
+                    <td className="font-medium">{a.accion.replaceAll("_", " ")}</td>
+                    <td className="whitespace-nowrap">{a.objetivo ?? "—"}</td>
+                    <td className="text-acero">{a.detalle ?? "—"}</td>
                   </tr>
                 ))}
+                {rows.length === 0 && (
+                  <tr>
+                    <td colSpan={5} className="text-acero-claro">Aún no hay movimientos.</td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>
@@ -47,7 +64,7 @@ export default function Page() {
             registrar en nombre de otra persona.
           </div>
           <div className="aviso">
-            <span className="aviso-tag">Ni los encargados la editan</span>
+            <span className="aviso-tag">Ni los administradores la editan</span>
             Esta bitácora es de solo lectura para todos los roles. Se consulta y se exporta;
             no se modifica.
           </div>

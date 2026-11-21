@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { SesionProvider } from "@/components/intranet/marco";
+import { usuarioActual } from "@/lib/auth/sesion";
 
 export const metadata: Metadata = {
   title: "Intranet",
@@ -11,6 +13,11 @@ export const metadata: Metadata = {
  * pie del sitio público: es otra audiencia y otro contexto. El layout raíz ya
  * aporta html, body y tipografías.
  */
-export default function IntranetLayout({ children }: LayoutProps<"/intranet">) {
-  return <div className="min-h-[60vh] bg-nube/50">{children}</div>;
+export default async function IntranetLayout({ children }: LayoutProps<"/intranet">) {
+  const u = await usuarioActual();
+  return (
+    <SesionProvider sesion={u && { nombre: u.nombre, email: u.email, rol: u.rol }}>
+      <div className="min-h-[60vh] bg-nube/50">{children}</div>
+    </SesionProvider>
+  );
 }

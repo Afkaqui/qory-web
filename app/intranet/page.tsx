@@ -1,8 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { EMPRESA } from "@/lib/empresa";
+import { FormIngreso } from "@/components/intranet/formularios";
+import { usuarioActual } from "@/lib/auth/sesion";
 
-export default function Page() {
+export default async function Page() {
+  if (await usuarioActual()) redirect("/intranet/panel");
   return (
     <div className="grid min-h-screen grid-cols-1 lg:grid-cols-[1.1fr_1fr]">
       {/* lado de marca */}
@@ -32,7 +36,7 @@ export default function Page() {
           <ul className="check check-luz mt-6">
             <li>Los operarios registran desde las tabletas de planta.</li>
             <li>Los jefes de área validan y ven su área.</li>
-            <li>Los encargados ven el tablero completo.</li>
+            <li>Los administradores ven el tablero completo.</li>
           </ul>
         </div>
 
@@ -44,53 +48,17 @@ export default function Page() {
       {/* lado de ingreso */}
       <section className="flex items-center justify-center bg-hueso px-6 py-12 sm:px-10">
         <div className="w-full max-w-[400px]">
-          <div className="aviso mb-6">
-            <span className="aviso-tag">Maqueta</span>
-            Esta pantalla es una demostración visual. <strong>Todavía no valida
-            credenciales</strong>, por eso los campos están desactivados: no escribas aquí
-            una contraseña real.
-          </div>
-
           <h2 className="text-[22px] text-verde">Ingresar</h2>
           <p className="mt-2 text-[14.5px] text-acero">
-            Usa tu código de colaborador, el mismo de tu fotocheck.
+            Con tu correo y la contraseña que definiste al activar tu cuenta.
           </p>
 
-          <form className="mt-6 grid gap-4" aria-describedby="aviso-maqueta">
-            <div className="campo">
-              <label htmlFor="codigo">Código de colaborador</label>
-              <input
-                id="codigo"
-                name="codigo"
-                type="text"
-                placeholder="OP01"
-                autoComplete="off"
-                disabled
-              />
-            </div>
-            <div className="campo">
-              <label htmlFor="clave">Contraseña</label>
-              <input
-                id="clave"
-                name="clave"
-                type="password"
-                placeholder="••••••••"
-                autoComplete="off"
-                disabled
-              />
-            </div>
-            <button type="button" className="btn btn-verde opacity-60" disabled>
-              Ingresar
-            </button>
-          </form>
+          <FormIngreso />
 
           <div className="mt-6 border-t border-linea pt-5">
-            <p id="aviso-maqueta" className="text-[13.5px] text-acero">
-              Para recorrer la maqueta sin credenciales:
+            <p className="text-[13.5px] text-acero">
+              ¿Primera vez? Usa el enlace de activación que te envió un administrador.
             </p>
-            <Link className="btn btn-hoja btn-brillo mt-3 inline-block" href="/intranet/panel">
-              Entrar a la demostración
-            </Link>
           </div>
 
           <p className="mt-6 text-[13px] text-acero-claro">

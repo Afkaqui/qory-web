@@ -1,9 +1,11 @@
+import { exigir } from "@/lib/auth/sesion";
 import { Caja, Marco } from "@/components/intranet/marco";
 import { PROCESOS } from "@/lib/intranet-demo";
 
 const FLUJOS = ["Por pedido", "Por stock"] as const;
 
-export default function Page() {
+export default async function Page() {
+  await exigir("jefe");
   const maxOrdenes = Math.max(...PROCESOS.map((p) => p.ordenes), 1);
 
   return (

@@ -3,8 +3,43 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState, type ReactNode } from "react";
+import { createContext, useContext, useState, type ReactNode } from "react";
 import { NAV, NIVEL, ROLES, type RolDemo, type Tono } from "@/lib/intranet-demo";
+import { salir } from "@/app/intranet/actions";
+import { NOMBRE_ROL, type Rol } from "@/lib/auth/roles";
+
+/* ----------------------------------------------------------------- sesión */
+
+export type SesionVista = { nombre: string; email: string; rol: Rol } | null;
+const SesionContext = createContext<SesionVista>(null);
+
+export function SesionProvider({ sesion, children }: { sesion: SesionVista; children: ReactNode }) {
+  return <SesionContext.Provider value={sesion}>{children}</SesionContext.Provider>;
+}
+
+/** Los datos de ejemplo de la maqueta distinguen tres niveles; los dos de administración ven el máximo. */
+const ROL_VISTA: Record<Rol, RolDemo> = {
+  operario: "operario",
+  jefe: "jefe",
+  administrador: "encargado",
+  superadmin: "encargado",
+};
+
+/* ------------------------------------------------------------- rol activo */
+
+/**
+ * El rol elegido en el selector «Ver como» llega a toda la página por
+ * contexto, para que una sección pueda mostrarse solo a quien corresponde.
+ * Es una maqueta: no hay sesión ni permisos reales, solo la forma de enseñar
+ * qué vería cada persona.
+ */
+const RolContext = createContext<RolDemo>("encargado");
+
+/** Muestra su contenido solo desde cierto nivel de rol hacia arriba. */
+export function SoloRol({ minimo, children }: { minimo: RolDemo; children: ReactNode }) {
+  const rol = useContext(RolContext);
+  return NIVEL[rol] >= NIVEL[minimo] ? <>{children}</> : null;
+}
 
 /* --------------------------------------------------------------- piezas */
 
@@ -19,7 +54,7 @@ const TONO: Record<Tono, string> = {
 export function Chip({ tono, children }: { tono: Tono; children: ReactNode }) {
   return (
     <span
-      className={`inline-block rounded-[2px] px-2 py-0.5 font-mono text-[10px] tracking-[0.08em] uppercase ${TONO[tono]}`}
+      className={`inline-block rounded-[2px] px-2 py-0.5 font-mono text-[10px] tracking-[0.08em] whitespace-nowrap uppercase ${TONO[tono]}`}
     >
       {children}
     </span>
@@ -58,16 +93,22 @@ export function Caja({
   titulo,
   children,
   className = "",
+  id,
+  nivel = 2,
 }: {
   titulo: string;
   children: ReactNode;
   className?: string;
+  id?: string;
+  /** Nivel del encabezado, para no romper la jerarquía cuando va dentro de una sección. */
+  nivel?: 2 | 3;
 }) {
+  const Encabezado = nivel === 3 ? "h3" : "h2";
   return (
-    <section className={`rounded-[3px] border border-linea bg-white p-4 ${className}`}>
-      <h2 className="mb-3 font-mono text-[9.5px] tracking-[0.1em] text-acero-claro uppercase">
+    <section id={id} className={`scroll-mt-20 rounded-[3px] border border-linea bg-white p-4 ${className}`}>
+      <Encabezado className="mb-3 font-mono text-[9.5px] tracking-[0.1em] text-acero-claro uppercase">
         {titulo}
-      </h2>
+      </Encabezado>
       {children}
     </section>
   );
@@ -117,7 +158,10 @@ export function Marco({
   children: ReactNode;
 }) {
   const pathname = usePathname();
-  const [rol, setRol] = useState<RolDemo>("encargado");
+  const sesion = useContext(SesionContext);
+  const [rolPrueba, setRol] = useState<RolDemo | null>(null);
+  // Solo el super administrador puede ensayar la vista de otros roles; el resto ve lo suyo.
+  const rol: RolDemo = (sesion?.rol === "superadmin" && rolPrueba) || (sesion ? ROL_VISTA[sesion.rol] : "operario");
   const [abierto, setAbierto] = useState(false);
 
   const visibles = NAV.filter((n) => NIVEL[rol] >= NIVEL[n.desde]);
@@ -125,6 +169,7 @@ export function Marco({
   const perfil = ROLES.find((r) => r.id === rol)!;
 
   return (
+    <RolContext.Provider value={rol}>
     <div className="min-h-screen bg-nube/60">
       {/* barra superior */}
       <div className="sticky top-0 z-40 border-b border-linea-honda bg-verde-hondo">
@@ -140,32 +185,38 @@ export function Marco({
             <span className="text-sm font-semibold text-[#e7ebe3]">Intranet Qory</span>
           </Link>
 
-          <span className="rounded-[2px] border border-[#8cc63f]/40 px-2 py-0.5 font-mono text-[9.5px] tracking-[0.1em] text-[#c7e68a] uppercase">
-            Maqueta
-          </span>
 
           <div className="ml-auto flex items-center gap-2">
-            <label htmlFor="rol-demo" className="hidden text-[11.5px] text-[#93a390] sm:block">
-              Ver como
-            </label>
-            <select
-              id="rol-demo"
-              value={rol}
-              onChange={(e) => setRol(e.target.value as RolDemo)}
-              className="rounded-[2px] border border-[#3a5340] bg-[#16281b] px-2 py-1.5 text-[12.5px] text-[#e7ebe3]"
-            >
-              {ROLES.map((r) => (
-                <option key={r.id} value={r.id}>
-                  {r.nombre}
-                </option>
-              ))}
-            </select>
-            <Link
-              href="/intranet"
-              className="rounded-[2px] border border-[#3a5340] px-2.5 py-1.5 text-[12.5px] text-[#c3ccbe] hover:bg-white/5"
-            >
-              Salir
-            </Link>
+            {sesion?.rol === "superadmin" && (
+              <>
+                <label htmlFor="rol-demo" className="hidden text-[11.5px] text-[#93a390] sm:block">
+                  Vista previa
+                </label>
+                <select
+                  id="rol-demo"
+                  value={rol}
+                  onChange={(e) => setRol(e.target.value as RolDemo)}
+                  className="rounded-[2px] border border-[#3a5340] bg-[#16281b] px-2 py-1.5 text-[12.5px] text-[#e7ebe3]"
+                >
+                  {ROLES.map((r) => (
+                    <option key={r.id} value={r.id}>
+                      {r.nombre}
+                    </option>
+                  ))}
+                </select>
+              </>
+            )}
+            {sesion && (
+              <span className="hidden text-[12.5px] text-[#c3ccbe] md:block">{sesion.nombre}</span>
+            )}
+            <form action={salir}>
+              <button
+                type="submit"
+                className="rounded-[2px] border border-[#3a5340] px-2.5 py-1.5 text-[12.5px] text-[#c3ccbe] hover:bg-white/5"
+              >
+                Salir
+              </button>
+            </form>
           </div>
         </div>
       </div>
@@ -219,8 +270,8 @@ export function Marco({
               );
             })}
             <p className="mt-5 rounded-[3px] border border-linea bg-white/70 px-3 py-2.5 text-[11.5px] leading-snug text-acero-claro">
-              Estás viendo la intranet como <b className="text-verde">{perfil.nombre}</b>.{" "}
-              {perfil.quien}. Cambia el selector de arriba para ver qué alcanza cada rol.
+              Sesión de <b className="text-verde">{sesion ? NOMBRE_ROL[sesion.rol] : perfil.nombre}</b>.{" "}
+              {perfil.quien}.
             </p>
           </nav>
         </div>
@@ -233,10 +284,11 @@ export function Marco({
           </header>
           {children}
           <p className="mt-8 border-t border-linea pt-4 font-mono text-[10.5px] tracking-[0.06em] text-acero-claro uppercase">
-            Maqueta visual · datos de ejemplo · sin base de datos ni sesión real
+            Las cifras del tablero son de ejemplo hasta conectar los datos reales
           </p>
         </main>
       </div>
     </div>
+    </RolContext.Provider>
   );
 }

@@ -1,10 +1,12 @@
+import { exigir } from "@/lib/auth/sesion";
 import { Caja, Chip, FormularioMaqueta, Marco } from "@/components/intranet/marco";
 import { PERSONAS, TAREAS } from "@/lib/intranet-demo";
 
 const ABIERTAS = TAREAS.filter((t) => t.estado === "abierta");
 const CERRADAS = TAREAS.filter((t) => t.estado === "cerrada");
 
-export default function Page() {
+export default async function Page() {
+  await exigir("operario");
   return (
     <Marco
       titulo="Tareas"

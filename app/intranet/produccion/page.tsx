@@ -1,9 +1,11 @@
+import { exigir } from "@/lib/auth/sesion";
 import { Caja, Chip, FormularioMaqueta, Marco } from "@/components/intranet/marco";
 import { ESTADO, LOTES, PARTES } from "@/lib/intranet-demo";
 
 const ABIERTOS = LOTES.filter((l) => !["liberado", "rechazado"].includes(l.estado));
 
-export default function Page() {
+export default async function Page() {
+  await exigir("operario");
   return (
     <Marco
       titulo="Parte de producción"

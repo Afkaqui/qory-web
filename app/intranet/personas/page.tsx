@@ -1,3 +1,4 @@
+import { exigir } from "@/lib/auth/sesion";
 import { Caja, Chip, Marco, Tile } from "@/components/intranet/marco";
 import { PERSONAS, type Tono } from "@/lib/intranet-demo";
 
@@ -7,7 +8,8 @@ const CAPACITACION: Record<string, { texto: string; tono: Tono }> = {
   vencida: { texto: "Vencida", tono: "malo" },
 };
 
-export default function Page() {
+export default async function Page() {
+  await exigir("jefe");
   const presentes = PERSONAS.filter((p) => p.presente).length;
   const porVencer = PERSONAS.filter((p) => p.capacitacion !== "vigente").length;
   const cobertura = Math.round((presentes / PERSONAS.length) * 100);

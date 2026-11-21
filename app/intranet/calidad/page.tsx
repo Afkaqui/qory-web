@@ -1,3 +1,4 @@
+import { exigir } from "@/lib/auth/sesion";
 import { Caja, Chip, FormularioMaqueta, Marco } from "@/components/intranet/marco";
 import { ANALISIS, LOTES, type Tono } from "@/lib/intranet-demo";
 
@@ -11,7 +12,8 @@ const PARA_ANALIZAR = LOTES.filter((l) =>
   ["analisis", "acondicionado", "envasado"].includes(l.estado),
 );
 
-export default function Page() {
+export default async function Page() {
+  await exigir("operario");
   return (
     <Marco
       titulo="Control de calidad"
