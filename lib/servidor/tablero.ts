@@ -200,6 +200,28 @@ export async function periodos(): Promise<string[]> {
   return rows.map((r) => r.p);
 }
 
+/** Indicadores que se grafican a lo largo del tiempo, con el mes elegido como último punto. */
+const SERIES = ["C01", "P01", "F01", "F02", "F04"];
+
+async function series(hasta: string) {
+  const { rows } = await pool.query(
+    `SELECT c.codigo, to_char(c.periodo,'YYYY-MM') AS periodo, c.valor, c.denominador, i.tipo
+       FROM capturas c JOIN indicadores i ON i.codigo = c.codigo
+      WHERE c.codigo = ANY($1) AND c.periodo <= $2 AND c.valor IS NOT NULL
+      ORDER BY c.periodo`,
+    [SERIES, primerDia(hasta)],
+  );
+  const salida: Record<string, { periodo: string; valor: number }[]> = Object.fromEntries(SERIES.map((c) => [c, []]));
+  for (const r of rows) {
+    const v = Number(r.valor);
+    const d = num(r.denominador);
+    const valor = r.tipo === "razon" ? (d !== null && d > 0 ? v / d : null) : v;
+    if (valor !== null) salida[r.codigo].push({ periodo: r.periodo, valor });
+  }
+  for (const c of SERIES) salida[c] = salida[c].slice(-12);
+  return salida;
+}
+
 export async function verTablero(periodo: string) {
   if (!PERIODO.test(periodo)) return falla("Periodo no válido.");
   const corte = await corteDe(periodo);
@@ -214,6 +236,9 @@ export async function verTablero(periodo: string) {
     corte,
     periodos: await periodos(),
     indicadores,
+    series: await series(periodo),
+    caja: caja.map((f) => ({ semana: f.semana, inicio: f.inicio, cajaFinal: f.cajaFinal })),
+    accionesPorEstado: acciones.reduce<Record<string, number>>((m, a) => ({ ...m, [a.seguimiento]: (m[a.seguimiento] ?? 0) + 1 }), {}),
     resumen: {
       fueraDeMeta: indicadores.filter((i) => i.estado === "Fuera de meta").length,
       sinDatoOMeta: indicadores.filter((i) => i.estado === "Sin dato" || i.estado === "Sin meta").length,

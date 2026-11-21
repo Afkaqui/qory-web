@@ -76,3 +76,11 @@ export const nombrePeriodo = (p: string) => `${MESES[Number(p.slice(5)) - 1]} ${
 
 export const fechaCorta = (iso: string | null) =>
   iso ? `${iso.slice(8, 10)}/${iso.slice(5, 7)}/${iso.slice(0, 4)}` : "—";
+
+const MES_CORTO = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Set", "Oct", "Nov", "Dic"];
+/** «2026-11» → «Nov 26»: cabe bajo una barra. */
+export const etiquetaMes = (p: string) => `${MES_CORTO[Number(p.slice(5)) - 1]} ${p.slice(2, 4)}`;
+
+/** Cifras en miles para los ejes: 268 400 → «268k». */
+export const enMiles = (v: number) => `${(v / 1000).toLocaleString("es-PE", { maximumFractionDigits: v >= 100_000 ? 0 : 1 })}k`;
+export const pctCorto = (v: number) => `${(v * 100).toLocaleString("es-PE", { maximumFractionDigits: 0 })} %`;

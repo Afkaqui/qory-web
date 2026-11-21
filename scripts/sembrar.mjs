@@ -8,6 +8,10 @@ const cliente = new pg.Client({ connectionString: process.env.DATABASE_URL });
 await cliente.connect();
 try {
   await cliente.query("BEGIN");
+  // Lo que ya no está en el modelo se retira (con sus capturas).
+  const codigos = modelo.indicadores.map((i) => i.codigo);
+  await cliente.query("DELETE FROM capturas WHERE NOT (codigo = ANY($1))", [codigos]);
+  await cliente.query("DELETE FROM indicadores WHERE NOT (codigo = ANY($1))", [codigos]);
   for (const i of modelo.indicadores) {
     await cliente.query(
       `INSERT INTO indicadores (codigo, orden, frente, nombre, num_desc, den_desc, tipo, formato, sentido, meta_defecto, fuente, decision, responsable)
